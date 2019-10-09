@@ -15,6 +15,10 @@
 log/
 target/
 
-hibernate.cfg.xml
+# hibernate.cfg.xml
+*.cfg.xml
 
 *.war
+
+# app.properties
+*.properties

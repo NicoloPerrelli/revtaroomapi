@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.entities;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

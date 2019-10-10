@@ -19,7 +19,7 @@ public class Housing {
 	private int id;
 	
 	@Column(name="DESCRIPTION")
-	private double description;
+	private String description;
 	
 	@Column(name="PRICE_PER_MONTH")
 	private double pricePerMonth;

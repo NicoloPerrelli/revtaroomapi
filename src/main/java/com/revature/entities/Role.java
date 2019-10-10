@@ -1,5 +1,7 @@
 package com.revature.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,37 +18,84 @@ public class Role {
 	@Id
 	@Column(name="USER_ROLE_ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private int id;
+	private int roleId;
 	
 	@Column(name="USER_ROLE_NAME")
-	private String name;
+	private String roleName;
 	
-	public Role() {
-		super();
+	public Role(int id) {
+		this.roleId = id;
+		
+		switch(id) {
+		case 1:
+			roleName = "AMIN";
+			break;
+		case 2:
+			roleName = "DEV";
+			break;
+		case 3:
+			roleName = "USER";
+			break;
+		default:
+			roleName = "LOCKED";
+		}
 	}
 
-	public Role(int id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
+	public Role(String name) {
+		this.roleName = name;
+		
+		switch(name.toUpperCase()) {
+		case "ADMIN":
+			roleId = 1;
+			break;
+		case "DEV":
+			roleId = 2;
+			break;
+		case "USER":
+			roleId = 3;
+			break;
+		default:
+			roleId = 4;
+		}
 	}
 	
 
 	public int getId() {
-		return id;
+		return roleId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.roleId = id;
 	}
 
 	public String getName() {
-		return name;
+		return roleName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.roleName = name;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(roleId, roleName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Role))
+			return false;
+		Role other = (Role) obj;
+		return roleId == other.roleId && Objects.equals(roleName, other.roleName);
+	}
+
+	@Override
+	public String toString() {
+		return "Role [roleId=" + roleId + ", roleName=" + roleName + "]";
+	}
+	
 	
 	
 	

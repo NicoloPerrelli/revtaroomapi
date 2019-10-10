@@ -1,5 +1,7 @@
 package com.revature.entities;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,5 +26,69 @@ public class RoomForRent {
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="HOUSING_FK")
 	private Housing house;
+
+	public RoomForRent() {
+		super();
+	}
+
+	public RoomForRent(int id, double pricePerMonth, Housing house) {
+		super();
+		this.id = id;
+		this.pricePerMonth = pricePerMonth;
+		this.house = house;
+	}
+
+	public RoomForRent(double pricePerMonth, Housing house) {
+		super();
+		this.pricePerMonth = pricePerMonth;
+		this.house = house;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public double getPricePerMonth() {
+		return pricePerMonth;
+	}
+
+	public void setPricePerMonth(double pricePerMonth) {
+		this.pricePerMonth = pricePerMonth;
+	}
+
+	public Housing getHouse() {
+		return house;
+	}
+
+	public void setHouse(Housing house) {
+		this.house = house;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(house, id, pricePerMonth);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof RoomForRent))
+			return false;
+		RoomForRent other = (RoomForRent) obj;
+		return Objects.equals(house, other.house) && id == other.id
+				&& Double.doubleToLongBits(pricePerMonth) == Double.doubleToLongBits(other.pricePerMonth);
+	}
+
+	@Override
+	public String toString() {
+		return "RoomForRent [id=" + id + ", pricePerMonth=" + pricePerMonth + ", house=" + house + "]";
+	}
+	
+	
 	
 }

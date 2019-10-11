@@ -23,4 +23,4 @@ target/
 # app.properties
 *.properties
 
-target
+target/*

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/test-controller")
+@RequestMapping("/test")
 public class TestController {
 
-	@GetMapping(value="/test", produces=MediaType.TEXT_PLAIN_VALUE)
+	@GetMapping(produces=MediaType.TEXT_PLAIN_VALUE)
 	public String test() {
 		return "Application deployed and working!";
 	}

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.entities.User;
 import com.revature.exceptions.ErrorResponse;
 import com.revature.exceptions.ResourceNotFoundException;
-import com.revature.sercices.UserServices;
+import com.revature.services.UserServices;
 
 @RestController
 @RequestMapping("/users")

@@ -21,7 +21,10 @@ public class UserRepository {
 	}
 	
 	public User getByUsername(String username) {
-		return factory.getCurrentSession().get(User.class, username);
+		return factory.getCurrentSession()
+				.createNamedQuery("getByUsername", User.class)
+				.setParameter("un", username)
+				.getSingleResult();
 		
 	}
 	
@@ -32,7 +35,7 @@ public class UserRepository {
 	
 	public User getUserByCredentials(String username, String password) {
 		return factory.getCurrentSession()
-				.createQuery("getUserByCredentials", User.class)
+				.createNamedQuery("getUserByCredentials", User.class)
 				.setParameter("un", username)
 				.setParameter("pw", password)
 				.getSingleResult();

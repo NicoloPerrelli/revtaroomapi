@@ -23,6 +23,12 @@ public class Role {
 	@Column(name="USER_ROLE_NAME")
 	private String roleName;
 	
+	
+	
+	public Role() {
+		super();
+	}
+
 	public Role(int id) {
 		this.roleId = id;
 		

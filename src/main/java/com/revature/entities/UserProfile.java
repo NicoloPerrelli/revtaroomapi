@@ -20,36 +20,45 @@ public class UserProfile {
 	
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
 	@Column(name="DESCRIPTION")
 	private String description;
 	
+	@OneToOne(cascade= {CascadeType.ALL})
+	@JoinColumn
+	private User user;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="TRAINING_TYPE_FK")
 	private TrainingType trainingType;
 
 	
+	
 	public UserProfile() {
 		super();
 	}
 
 
-	public UserProfile(int id, String description, TrainingType trainingType) {
+
+	public UserProfile(String description, User user, TrainingType trainingType) {
+		super();
+		this.description = description;
+		this.user = user;
+		this.trainingType = trainingType;
+	}
+
+
+
+	public UserProfile(int id, String description, User user, TrainingType trainingType) {
 		super();
 		this.id = id;
 		this.description = description;
+		this.user = user;
 		this.trainingType = trainingType;
 	}
 
-
-	public UserProfile(String description, TrainingType trainingType) {
-		super();
-		this.description = description;
-		this.trainingType = trainingType;
-	}
 
 
 	public int getId() {
@@ -57,9 +66,11 @@ public class UserProfile {
 	}
 
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 
 	public String getDescription() {
@@ -67,9 +78,23 @@ public class UserProfile {
 	}
 
 
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 
 
 	public TrainingType getTrainingType() {
@@ -77,15 +102,18 @@ public class UserProfile {
 	}
 
 
+
 	public void setTrainingType(TrainingType trainingType) {
 		this.trainingType = trainingType;
 	}
 
 
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, trainingType);
+		return Objects.hash(description, id, trainingType, user);
 	}
+
 
 
 	@Override
@@ -96,16 +124,18 @@ public class UserProfile {
 			return false;
 		UserProfile other = (UserProfile) obj;
 		return Objects.equals(description, other.description) && id == other.id
-				&& Objects.equals(trainingType, other.trainingType);
+				&& Objects.equals(trainingType, other.trainingType) && Objects.equals(user, other.user);
 	}
+
 
 
 	@Override
 	public String toString() {
-		return "UserProfile [id=" + id + ", description=" + description + ", trainingType=" + trainingType + "]";
+		return "UserProfile [id=" + id + ", description=" + description + ", user=" + user + ", trainingType="
+				+ trainingType + "]";
 	}
+
+
 	
-	
-	 
 	
 }

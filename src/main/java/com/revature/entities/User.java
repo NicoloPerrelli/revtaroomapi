@@ -16,10 +16,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.revature.dtos.Principal;
+
 @NamedQueries({
-	@NamedQuery(name="findByUsername", query="from users JOIN user_role USING (user_role_id) WHERE username = :un"),
-	@NamedQuery(name="findByEmail", query="from users JOIN user_role USING (user_role_id) WHERE email = :email"),
-	@NamedQuery(name="findByCredentials", query="from users JOIN user_role USING (user_role_id) WHERE username = :un AND password = :pw")
+	@NamedQuery(name="getByUsername", query="from User u where u.username = :un"),
+	//@NamedQuery(name="findByEmail", query="from user JOIN role USING (roleId) WHERE email = :email"),
+	@NamedQuery(name="getUserByCredentials", query="from User u where u.username = :un and u.password = :pw")
 })
 
 @Entity
@@ -29,7 +31,7 @@ public class User {
 	
 	@Id
 	@Column(name="USER_ID")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
 	@Column(name="FIRST_NAME", nullable = false)
@@ -47,9 +49,9 @@ public class User {
 	@Column(name="PASSWORD")
 	private String password;
 	
-	@OneToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="USER_PROFILE_FK")
-	private UserProfile profile;
+//	@OneToOne(cascade= {CascadeType.ALL})
+//	@JoinColumn(name="USER_PROFILE_FK")
+//	private UserProfile profile;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="USER_ROLE_FK")
@@ -128,13 +130,13 @@ public class User {
 		this.password = password;
 	}
 
-	public UserProfile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(UserProfile profile) {
-		this.profile = profile;
-	}
+//	public UserProfile getProfile() {
+//		return profile;
+//	}
+//
+//	public void setProfile(UserProfile profile) {
+//		this.profile = profile;
+//	}
 
 	public Role getRole() {
 		return role;
@@ -143,10 +145,21 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+public void copyFields(User copy) {
+		
+		this.email = copy.email;
+		this.username = copy.username;
+		this.password = copy.password;
+		this.role = copy.role;
+	}
+	public Principal extractPrincipal() {
+		return new Principal(this.id, this.username, this.role.toString());
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, firstName, id, lastName, password, profile, role, username);
+		return Objects.hash(email, firstName, id, lastName, password, role, username);
 	}
 
 	@Override
@@ -158,14 +171,14 @@ public class User {
 		User other = (User) obj;
 		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName) && id == other.id
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
-				&& Objects.equals(profile, other.profile) && Objects.equals(role, other.role)
+				//&& Objects.equals(profile, other.profile) && Objects.equals(role, other.role)
 				&& Objects.equals(username, other.username);
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-				+ ", email=" + email + ", password=" + password + ", profile=" + profile + ", role=" + role + "]";
+				+ ", email=" + email + ", password=" + password + ", role=" + role + "]";
 	}
 	
 	

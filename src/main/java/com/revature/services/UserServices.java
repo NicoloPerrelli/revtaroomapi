@@ -1,4 +1,4 @@
-package com.revature.sercices;
+package com.revature.services;
 
 import java.util.List;
 
@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.dtos.Credentials;
 import com.revature.entities.Role;
 import com.revature.entities.User;
+import com.revature.exceptions.BadRequestException;
 import com.revature.repos.UserRepository;
 
 @Service
@@ -34,23 +36,31 @@ public class UserServices {
 	}
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-	public User login(String username, String password) {
+	public User login(Credentials creds) {
 		System.out.println("UserService.login Invoked!");
 
-		if (username == null || username.equals("") || password == null || password.equals("")) {
-			System.out.println("non-value provided for username/password!");
-			return null;
+		if(creds == null || creds.getUsername() == null || creds.getPassword() == null
+				|| creds.getUsername().equals("") || creds.getPassword().equals(""))
+		{
+			throw new BadRequestException("Invalid credentials object provided");
 		}
-
-		return (User) userRepo.getUserByCredentials(username, password);
+		
+		User retrievedUser = userRepo.getUserByCredentials(creds.getUsername(), creds.getPassword());
+		
+		if(retrievedUser == null) {
+			throw new SecurityException("No user found with provided credentials");
+		}
+		
+		return retrievedUser;
 	}
+	
 
-	@Transactional(readOnly=false, isolation=Isolation.READ_COMMITTED)
+	@Transactional(isolation=Isolation.DEFAULT)
 	public User register(User newUser) {
 		System.out.println("UserService.register Invoked!");
 		
 		String username = newUser.getUsername();
-		String email = newUser.getEmail();
+		//String email = newUser.getEmail();
 		
 		if (!validateUserFields(newUser)) {
 			System.out.println("Invalid fields found on user object");
@@ -58,9 +68,9 @@ public class UserServices {
 		}
 		
 		boolean usernameAvailable = userRepo.getByUsername(username) == null;
-		boolean emailAvailable = userRepo.getByEmail(email) == null;
+		//boolean emailAvailable = userRepo.getByEmail(email) == null;
 		
-		if(!usernameAvailable || !emailAvailable) {
+		if(!usernameAvailable ) {
 			System.out.println("Provided username/email is already taken - user not created");
 			return null;
 		}

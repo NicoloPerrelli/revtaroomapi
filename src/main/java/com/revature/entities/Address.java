@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -15,13 +17,11 @@ public class Address {
 	
 	@Id
 	@Column(name="ADDRESS_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
-	@Column(name="STREET_NAME")
-	private String streetName;
-	
-	@Column(name="HOUSE_NUMBER")
-	private String houseNumber;
+	@Column(name="STREET_ADDRESS")
+	private String streetAddress;
 	
 	@Column(name="CITY")
 	private String city;
@@ -42,12 +42,9 @@ public class Address {
 		super();
 	}
 
-	public Address(int id, String streetName, String houseNumber, String city, String state, String zipCode,
-			String latitude, String longitude) {
+	public Address(String streetAddress, String city, String state, String zipCode, String latitude, String longitude) {
 		super();
-		this.id = id;
-		this.streetName = streetName;
-		this.houseNumber = houseNumber;
+		this.streetAddress = streetAddress;
 		this.city = city;
 		this.state = state;
 		this.zipCode = zipCode;
@@ -55,11 +52,11 @@ public class Address {
 		this.longitude = longitude;
 	}
 
-	public Address(String streetName, String houseNumber, String city, String state, String zipCode, String latitude,
+	public Address(int id, String streetAddress, String city, String state, String zipCode, String latitude,
 			String longitude) {
 		super();
-		this.streetName = streetName;
-		this.houseNumber = houseNumber;
+		this.id = id;
+		this.streetAddress = streetAddress;
 		this.city = city;
 		this.state = state;
 		this.zipCode = zipCode;
@@ -75,20 +72,12 @@ public class Address {
 		this.id = id;
 	}
 
-	public String getStreetName() {
-		return streetName;
+	public String getStreetAddress() {
+		return streetAddress;
 	}
 
-	public void setStreetName(String streetName) {
-		this.streetName = streetName;
-	}
-
-	public String getHouseNumber() {
-		return houseNumber;
-	}
-
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
 	}
 
 	public String getCity() {
@@ -133,7 +122,7 @@ public class Address {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(city, houseNumber, id, latitude, longitude, state, streetName, zipCode);
+		return Objects.hash(city, id, latitude, longitude, state, streetAddress, zipCode);
 	}
 
 	@Override
@@ -143,19 +132,20 @@ public class Address {
 		if (!(obj instanceof Address))
 			return false;
 		Address other = (Address) obj;
-		return Objects.equals(city, other.city) && Objects.equals(houseNumber, other.houseNumber) && id == other.id
-				&& Objects.equals(latitude, other.latitude) && Objects.equals(longitude, other.longitude)
-				&& Objects.equals(state, other.state) && Objects.equals(streetName, other.streetName)
-				&& Objects.equals(zipCode, other.zipCode);
+		return Objects.equals(city, other.city) && id == other.id && Objects.equals(latitude, other.latitude)
+				&& Objects.equals(longitude, other.longitude) && Objects.equals(state, other.state)
+				&& Objects.equals(streetAddress, other.streetAddress) && Objects.equals(zipCode, other.zipCode);
 	}
 
 	@Override
 	public String toString() {
-		return "Address [id=" + id + ", streetName=" + streetName + ", houseNumber=" + houseNumber + ", city=" + city
-				+ ", state=" + state + ", zipCode=" + zipCode + ", latitude=" + latitude + ", longitude=" + longitude
-				+ "]";
+		return "Address [id=" + id + ", streetAddress=" + streetAddress + ", city=" + city + ", state=" + state
+				+ ", zipCode=" + zipCode + ", latitude=" + latitude + ", longitude=" + longitude + "]";
 	}
+
 	
+
+
 	
 	
 	

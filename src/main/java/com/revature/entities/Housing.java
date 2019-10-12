@@ -9,9 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+@NamedQueries({
+	@NamedQuery(name="getHouseByUserId", query="from Housing h where h.user = :user")
+})
 
 @Entity
 @Table(name="HOUSING")

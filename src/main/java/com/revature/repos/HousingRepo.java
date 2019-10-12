@@ -2,11 +2,13 @@ package com.revature.repos;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.revature.entities.Housing;
+
 
 @Repository
 public class HousingRepo implements CrudRepository<Housing>{
@@ -25,8 +27,7 @@ public class HousingRepo implements CrudRepository<Housing>{
 
 	@Override
 	public Housing getById(int id) {
-		//TODO
-		return null;
+		return factory.getCurrentSession().get(Housing.class, id);
 	}
 	
 	/**
@@ -37,8 +38,11 @@ public class HousingRepo implements CrudRepository<Housing>{
 	 * @return
 	 */
 	public List<Housing> getByUserId(int userId) {
-		// TODO
-		return null;
+		
+		return factory.getCurrentSession()
+				.createNamedQuery("from Housing h where h.user = userId", Housing.class)
+				.setParameter("user", userId)
+				.getResultList();
 	}
 	
 	
@@ -52,8 +56,9 @@ public class HousingRepo implements CrudRepository<Housing>{
 	 */
 	@Override
 	public Housing save(Housing housingObj) {
-		// TODO Auto-generated method stub
-		return null;
+	
+		factory.getCurrentSession().save(housingObj);
+		return housingObj;
 	}
 	
 	/**
@@ -65,8 +70,17 @@ public class HousingRepo implements CrudRepository<Housing>{
 	 */
 	@Override
 	public boolean update(Housing updatedObj) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		Session session = factory.getCurrentSession();
+		Housing houseInDb = session.get(Housing.class, updatedObj.getId());
+		
+		if(houseInDb == null) return false;
+		
+		houseInDb.setDescription(updatedObj.getDescription());
+		houseInDb.setPricePerMonth(updatedObj.getPricePerMonth());
+		houseInDb.setUser(updatedObj.getUser());
+		
+		return true;
 	}
 
 	@Override

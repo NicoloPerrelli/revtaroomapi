@@ -40,7 +40,7 @@ public class HousingRepo implements CrudRepository<Housing>{
 	public List<Housing> getByUserId(int userId) {
 		
 		return factory.getCurrentSession()
-				.createNamedQuery("from Housing h where h.user = userId", Housing.class)
+				.createNamedQuery("getHouseByUserId", Housing.class)
 				.setParameter("user", userId)
 				.getResultList();
 	}

@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 public class Credentials {
 
 	@NotNull
-	private String username;
+	private String email;
 	@NotNull
 	private String password;
 	
@@ -15,18 +15,18 @@ public class Credentials {
 		super();
 	}
 
-	public Credentials(String username, String password) {
+	public Credentials(String email, String password) {
 		super();
-		this.username = username;
+		this.email = email;
 		this.password = password;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -39,7 +39,7 @@ public class Credentials {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(password, username);
+		return Objects.hash(email, password);
 	}
 
 	@Override
@@ -49,15 +49,14 @@ public class Credentials {
 		if (!(obj instanceof Credentials))
 			return false;
 		Credentials other = (Credentials) obj;
-		return Objects.equals(password, other.password) && Objects.equals(username, other.username);
+		return Objects.equals(email, other.email) && Objects.equals(password, other.password);
 	}
 
 	@Override
 	public String toString() {
-		return "Credentials [username=" + username + ", password=" + password + "]";
+		return "Credentials [email=" + email + ", password=" + password + "]";
 	}
+	
+	
 
-	
-	
-	
 }

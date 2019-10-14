@@ -20,8 +20,8 @@ import com.revature.dtos.Principal;
 
 @NamedQueries({
 	@NamedQuery(name="getByUsername", query="from User u where u.username = :un"),
-	//@NamedQuery(name="findByEmail", query="from user JOIN role USING (roleId) WHERE email = :email"),
-	@NamedQuery(name="getUserByCredentials", query="from User u where u.username = :un and u.password = :pw")
+	@NamedQuery(name="getByEmail", query="from User u where u.email = :email"),
+	@NamedQuery(name="getUserByCredentials", query="from User u where u.email = :un and u.password = :pw")
 })
 
 @Entity
@@ -154,7 +154,7 @@ public void copyFields(User copy) {
 		this.role = copy.role;
 	}
 	public Principal extractPrincipal() {
-		return new Principal(this.id, this.username, this.role.toString());
+		return new Principal(this.id, this.email, this.role.toString());
 	}
 
 	@Override

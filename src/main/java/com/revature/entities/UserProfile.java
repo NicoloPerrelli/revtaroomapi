@@ -33,15 +33,15 @@ public class UserProfile {
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="TRAINING_TYPE_FK")
 	private TrainingType trainingType;
-
+	
 	
 	
 	public UserProfile() {
 		super();
 	}
-
-
-
+	
+	
+	
 	public UserProfile(String description, User user, TrainingType trainingType) {
 		super();
 		this.description = description;

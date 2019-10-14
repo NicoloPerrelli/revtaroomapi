@@ -1,12 +1,14 @@
 package com.revature.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.entities.UserProfile;
 import com.revature.repos.ProfileReop;
 
+@Service
 public class ProfileService {
 
 	private ProfileReop profileReop;

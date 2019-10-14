@@ -96,4 +96,5 @@ public class AuthFilter extends OncePerRequestFilter {
     		resp.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization");
     		resp.setHeader("Access-Control-Expose-Headers", "Authorization");
     	}
+   }
 }

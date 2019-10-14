@@ -33,4 +33,10 @@ public class HousingService {
 		return list;
 	}
 	
+	@Transactional()
+	public Housing addHousing(Housing house) {
+		
+		house = housingRepo.save(house);
+		return house;
+	}
 }

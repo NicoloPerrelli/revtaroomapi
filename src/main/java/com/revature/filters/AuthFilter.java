@@ -51,14 +51,14 @@ public class AuthFilter extends OncePerRequestFilter {
 	public void extractPrincipal(HttpServletRequest req) throws IOException, ServletException {
 		//log.info("Attempting to extract principal object from JWT...");
 		String header = req.getHeader(JwtConfig.HEADER);
-		
+		System.out.println("my header is: " + header);
 		if(header == null || !header.startsWith(JwtConfig.PREFIX)) {
 			//log.info("No token found with required prefix");
 			return;
 		}
 		
 		String token = header.replaceAll(JwtConfig.PREFIX, "");
-		
+		System.out.println("my token is: " + token);
 		try {
 			
 			Claims claims = Jwts.parser()
@@ -80,8 +80,7 @@ public class AuthFilter extends OncePerRequestFilter {
 			e.printStackTrace();
 		}
     }
-    	
-<<<<<<< HEAD
+	
 	/**
 	 * Attaches the required appropriate response headers to satisfy 
 	 * the CORS pre-flight request requirements. 
@@ -97,22 +96,5 @@ public class AuthFilter extends OncePerRequestFilter {
 		resp.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization");
 		resp.setHeader("Access-Control-Expose-Headers", "Authorization");
 	}
-=======
-    	/**
-    	 * Attaches the required appropriate response headers to satisfy 
-    	 * the CORS pre-flight request requirements. 
-    	 * 
-    	 * @param resp
-    	 * @throws IOException
-    	 * @throws ServletException
-    	 */
-    	public void attachCorsResponseHeaders(HttpServletResponse resp) throws IOException, ServletException {
-    		//log.info("Attaching CORS headers to HTTP response");
-    		resp.setHeader("Access-Control-Allow-Origin", "*");
-    		resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-    		resp.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization");
-    		resp.setHeader("Access-Control-Expose-Headers", "Authorization");
-    	}
->>>>>>> 63896cdc337e42f6f7a446b34be97fcf9abf634e
 }
 

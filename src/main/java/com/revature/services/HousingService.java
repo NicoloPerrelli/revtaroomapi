@@ -28,7 +28,6 @@ public class HousingService {
 	@Transactional()
 	public List<Housing> getHousingById(int id) {
 		List<Housing> list = new ArrayList<>();
-		System.out.println("Id:" + id);
 		Housing housing = housingRepo.getById(id);
 		if(housing != null) list.add(housing);
 		return list;

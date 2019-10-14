@@ -6,17 +6,17 @@ public class Principal {
 
 		
 		private int id;
-		private String username;
+		private String email;
 		private String role;
 		
 		public Principal() {
 			super();
 		}
 
-		public Principal(int id, String username, String role) {
+		public Principal(int id, String email, String role) {
 			super();
 			this.id = id;
-			this.username = username;
+			this.email = email;
 			this.role = role;
 		}
 
@@ -28,12 +28,12 @@ public class Principal {
 			this.id = id;
 		}
 
-		public String getUsername() {
-			return username;
+		public String getEmail() {
+			return email;
 		}
 
-		public void setUsername(String username) {
-			this.username = username;
+		public void setEmail(String email) {
+			this.email = email;
 		}
 
 		public String getRole() {
@@ -43,28 +43,26 @@ public class Principal {
 		public void setRole(String role) {
 			this.role = role;
 		}
-		
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(id, role, username);
+			return Objects.hash(email, id, role);
 		}
 
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
 				return true;
-			if (obj == null)
-				return false;
 			if (!(obj instanceof Principal))
 				return false;
 			Principal other = (Principal) obj;
-			return id == other.id && Objects.equals(role, other.role) && Objects.equals(username, other.username);
+			return Objects.equals(email, other.email) && id == other.id && Objects.equals(role, other.role);
 		}
 
 		@Override
 		public String toString() {
-			return "Principal [id=" + id + ", username=" + username + ", role=" + role + "]";
+			return "Principal [id=" + id + ", email=" + email + ", role=" + role + "]";
 		}
 
+		
 }

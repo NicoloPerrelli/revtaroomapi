@@ -3,9 +3,11 @@ package com.revature.repos;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.revature.entities.UserProfile;
 
+@Repository
 public class ProfileReop {
 
 	private SessionFactory factory;
@@ -27,8 +29,6 @@ public class ProfileReop {
 		
 		profileInDb.setDescription(updatedProfile.getDescription());
 		profileInDb.setTrainingType(updatedProfile.getTrainingType());
-		
 		return true;
-		
 	}
 }

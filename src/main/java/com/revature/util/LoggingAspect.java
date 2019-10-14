@@ -19,29 +19,25 @@
 //	
 //	private final Logger logger = LogManager.getLogger(this.getClass());
 //	
-//	@Pointcut("within(com.revautre..*)")
-//	public void logAll() {
-//		
-//	}
+//	@Pointcut("within(com.revature..*)")
+//	public void logAll() { }
 //	
 //	@Before("logAll()")
 //	public void logMethodStart(JoinPoint jp) {
-//		
 //		String methodSig = jp.getTarget().getClass().toString() + "." + jp.getSignature().getName();
 //		logger.info("{} invoked at {}", methodSig, LocalTime.now());
 //		logger.info("Input arguments: {}", Arrays.toString(jp.getArgs()));
-//		
 //	}
 //	
-//	@AfterReturning(pointcut="logAll()", returning="obj")
-//	public void logMethodReturn(JoinPoint jp, Object obj) {
+//	@AfterReturning(pointcut="logAll()", returning="rtrn")
+//	public void logMethodReturn(JoinPoint jp, Object rtrn) {
 //		String methodSig = jp.getTarget().getClass().toString() + "." + jp.getSignature().getName();
-//		logger.info("{} sucessfully returned at {}", methodSig, LocalTime.now());
-//		logger.info("Object returned: {}", obj);
+//		logger.info("{} successfully returned at {}", methodSig, LocalTime.now());
+//		logger.info("Object returned: {}", rtrn);
 //	}
 //	
 //	@AfterThrowing(pointcut="logAll()", throwing="e")
-//	public void errorOcurrence(JoinPoint jp, Exception e) {
+//	public void errorOccurrence(JoinPoint jp, Exception e) {
 //		String methodSig = jp.getTarget().getClass().toString() + "." + jp.getSignature().getName();
 //		logger.info("{} thrown in method: {}", e.getMessage(), methodSig);
 //	}

@@ -11,6 +11,7 @@ import com.revature.dtos.Credentials;
 import com.revature.entities.Role;
 import com.revature.entities.User;
 import com.revature.exceptions.BadRequestException;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.repos.UserRepository;
 
 @Service
@@ -34,18 +35,44 @@ public class UserServices {
 
 		return userRepo.getByUsername(username);
 	}
-
+	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+	public User getByEmail(String email) {
+		System.out.println("UserService.getByUsername Invoked!");
+
+		if (email == null || email.equals("")) {
+			System.out.println("non-value provided for username!");
+			return null;
+		}
+
+		return userRepo.getByEmail(email);
+	}
+	
+	@Transactional(readOnly=true)
+	public User getUserById(int id) {
+		
+		if(id <= 0) {
+			throw new BadRequestException("Invalid id provided");
+		} 
+		User tempId = userRepo.getById(id);
+		if(id != tempId.getId()) {
+			throw new ResourceNotFoundException("No card found with provided id");
+		}
+		return tempId;
+	}
+	
+
+	@Transactional(readOnly = true)
 	public User login(Credentials creds) {
 		System.out.println("UserService.login Invoked!");
 
-		if(creds == null || creds.getUsername() == null || creds.getPassword() == null
-				|| creds.getUsername().equals("") || creds.getPassword().equals(""))
+		if(creds == null || creds.getEmail() == null || creds.getPassword() == null
+				|| creds.getEmail().equals("") || creds.getPassword().equals(""))
 		{
 			throw new BadRequestException("Invalid credentials object provided");
 		}
 		
-		User retrievedUser = userRepo.getUserByCredentials(creds.getUsername(), creds.getPassword());
+		User retrievedUser = userRepo.getUserByCredentials(creds.getEmail(), creds.getPassword());
 		
 		if(retrievedUser == null) {
 			throw new SecurityException("No user found with provided credentials");
@@ -60,7 +87,7 @@ public class UserServices {
 		System.out.println("UserService.register Invoked!");
 		
 		String username = newUser.getUsername();
-		//String email = newUser.getEmail();
+		String email = newUser.getEmail();
 		
 		if (!validateUserFields(newUser)) {
 			System.out.println("Invalid fields found on user object");
@@ -68,9 +95,9 @@ public class UserServices {
 		}
 		
 		boolean usernameAvailable = userRepo.getByUsername(username) == null;
-		//boolean emailAvailable = userRepo.getByEmail(email) == null;
+		boolean emailAvailable = userRepo.getByEmail(email) == null;
 		
-		if(!usernameAvailable ) {
+		if(!usernameAvailable && !emailAvailable ) {
 			System.out.println("Provided username/email is already taken - user not created");
 			return null;
 		}
@@ -78,7 +105,7 @@ public class UserServices {
 		System.out.println("Setting role of new users to \"USER\"");
 		newUser.setRole(new Role("USER"));
 		
-		return userRepo.add(newUser);
+		return userRepo.save(newUser);
 	}
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)

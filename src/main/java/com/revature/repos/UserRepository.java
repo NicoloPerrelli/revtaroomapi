@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.revature.entities.User;
 
 @Repository
-public class UserRepository {
+public class UserRepository implements CrudRepository<User> {
 	
 	private SessionFactory factory;
 	
@@ -29,31 +29,37 @@ public class UserRepository {
 	}
 	
 	public User getByEmail(String email) {
-		return factory.getCurrentSession().get(User.class, email);
+		return factory.getCurrentSession()
+				.createNamedQuery("getByEmail", User.class)
+				.setParameter("email", email)
+				.getSingleResult();
 		
 	}
 	
-	public User getUserByCredentials(String username, String password) {
+	public User getUserByCredentials(String email, String password) {
 		return factory.getCurrentSession()
 				.createNamedQuery("getUserByCredentials", User.class)
-				.setParameter("un", username)
+				.setParameter("un", email)
 				.setParameter("pw", password)
 				.getSingleResult();
 	}
-	
+	@Override
 	public List<User> getAll(){
 		return factory.getCurrentSession().createQuery("from User", User.class).getResultList();
 	}
 	
+	@Override
 	public User getById(int id) {
 		return factory.getCurrentSession().get(User.class, id);
 	}
 
-	public User add(User newUser) {
+	@Override
+	public User save(User newUser) {
 		factory.getCurrentSession().save(newUser);
 		return newUser;
 	}
 	
+	@Override
 	public boolean update(User updatedUser) {
 		Session session = factory.getCurrentSession();
 		User userInDb = session.get(User.class, updatedUser.getId());
@@ -68,5 +74,11 @@ public class UserRepository {
 		
 		return true;
 		
+	}
+
+	@Override
+	public boolean deleteById(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

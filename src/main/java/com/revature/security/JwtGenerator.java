@@ -19,7 +19,7 @@ public class JwtGenerator {
 
         JwtBuilder builder = Jwts.builder()
                 .setId(Integer.toString(subject.getId()))
-                .setSubject(subject.getUsername())
+                .setSubject(subject.getEmail())
                 .setIssuer("revature")
                 .claim("role", subject.getRole().toString())
                 .setIssuedAt(new Date(nowMillis))

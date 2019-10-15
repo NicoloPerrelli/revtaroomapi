@@ -44,18 +44,25 @@ public class HousingService {
 	}
 	
 	@Transactional()
-	public Housing addHousing(BrokenHousing bh) throws BadRequestException {
+	public Housing addHousing(BrokenHousing bh) {
 		System.out.println("In service addHousing...");
+		
+		// Validation of Address
+		// to do
+		
+		// Validation of PricePerMonth
+		if(bh.getPricePerMonth() < 100 || bh.getPricePerMonth() > 7000) throw new BadRequestException("Invalid price");
+		
 		
 		System.out.println("Get user by id");
 		User user = userRepo.getById(bh.getUserId());
 		
-		if(user == null) throw new BadRequestException();
+		if(user == null) throw new BadRequestException("Null user");
 		
 		System.out.println("Add address...");
 		Address addr = addrRepo.save(bh.getAddress());
 		
-		if(addr == null) throw new BadRequestException();
+		if(addr == null) throw new BadRequestException("Null address");
 		
 		Housing house = this.mapHousing(bh);
 		

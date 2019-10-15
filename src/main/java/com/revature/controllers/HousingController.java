@@ -21,7 +21,6 @@ import com.revature.dtos.Principal;
 import com.revature.entities.Housing;
 import com.revature.exceptions.BadRequestException;
 import com.revature.exceptions.ErrorResponse;
-import com.revature.exceptions.ResourceCreationException;
 import com.revature.services.HousingService;
 import com.revature.util.GenericValidation;
 
@@ -53,29 +52,27 @@ public class HousingController {
 	}
 	
 	@PostMapping(produces="application/json")
-	public Housing postHouses(@RequestBody BrokenHousing bh, HttpServletRequest req) throws BadRequestException {
+	public Housing postHouses(@RequestBody BrokenHousing bh, HttpServletRequest req) {
 		System.out.println("In postHouses controller...");
+		
 		Principal principal = (Principal) req.getAttribute("principal");
 		
 		if(principal == null || principal.getId() == 0) throw new BadRequestException("Unauthorized");
-		
+		System.out.println("After principal");
 		bh.setUserId(principal.getId());
 		System.out.println("Principal: " + principal.getEmail());
-		
-		// Validation of Address
-		// to do
-		
-		// Validation of PricePerMonth
-		if(bh.getPricePerMonth() < 100 || bh.getPricePerMonth() > 5000) throw new BadRequestException("Invalid price");
-		
 		
 		return this.housingService.addHousing(bh);
 	}
 	
 	@ExceptionHandler
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleResourceNotFoundException(BadRequestException bre) {
-		
-		return bre.getError();
+		ErrorResponse err = new ErrorResponse();
+		err.setStatus(HttpStatus.BAD_REQUEST.value());
+		err.setMessage(bre.getMessage());
+		err.setTimestamp(System.currentTimeMillis());
+		return err;
 	}
 	
 }

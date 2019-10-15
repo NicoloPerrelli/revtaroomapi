@@ -7,17 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.dtos.BrokenHousing;
+import com.revature.entities.Address;
 import com.revature.entities.Housing;
+import com.revature.entities.User;
+import com.revature.exceptions.BadRequestException;
+import com.revature.repos.AddressRepository;
 import com.revature.repos.HousingRepo;
+import com.revature.repos.UserRepository;
 
 @Service
 public class HousingService {
 	
 	private HousingRepo housingRepo;
+	private AddressRepository addrRepo;
+	private UserRepository userRepo;
 	
 	@Autowired
-	public HousingService(HousingRepo repo) {
+	public HousingService(HousingRepo repo, AddressRepository addrRepo, UserRepository userRepo) {
 		this.housingRepo = repo;
+		this.addrRepo = addrRepo;
+		this.userRepo = userRepo;
 	}
 	
 	@Transactional()
@@ -34,9 +44,37 @@ public class HousingService {
 	}
 	
 	@Transactional()
-	public Housing addHousing(Housing house) {
+	public Housing addHousing(BrokenHousing bh) throws BadRequestException {
 		System.out.println("In service addHousing...");
+		
+		System.out.println("Get user by id");
+		User user = userRepo.getById(bh.getUserId());
+		
+		if(user == null) throw new BadRequestException();
+		
+		System.out.println("Add address...");
+		Address addr = addrRepo.save(bh.getAddress());
+		
+		if(addr == null) throw new BadRequestException();
+		
+		Housing house = this.mapHousing(bh);
+		
+		house.setAddress(addr);
+		house.setUser(user);
+		
 		house = housingRepo.save(house);
+		
 		return house;
 	}
+	
+	
+	private Housing mapHousing(BrokenHousing bh) {
+		Housing house = new Housing();
+		
+		house.setDescription(bh.getDescription());
+		house.setPricePerMonth(bh.getPricePerMonth());
+		
+		return house;
+	}
+	
 }

@@ -47,7 +47,12 @@ public class Housing {
 	public Housing() {
 		super();
 	}
-
+	
+	public Housing(int id) {
+		super();
+		this.id = id;
+	}
+	
 	public Housing(int id, String description, double pricePerMonth, User user, Address address) {
 		super();
 		this.id = id;

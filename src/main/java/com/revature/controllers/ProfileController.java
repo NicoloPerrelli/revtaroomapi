@@ -33,6 +33,7 @@ public class ProfileController {
 
 	@GetMapping(produces="application/json")
 	public UserProfile getMyProfile(HttpServletRequest req){
+		System.out.println("in getMyProfile in profileController... " + req);
 		Principal principal = (Principal) req.getAttribute("principal");
 		return profileService.getById(principal.getId());
 	}

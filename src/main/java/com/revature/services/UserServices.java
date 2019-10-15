@@ -82,7 +82,7 @@ public class UserServices {
 	}
 	
 
-	@Transactional(isolation=Isolation.DEFAULT)
+	@Transactional
 	public User register(User newUser) {
 		System.out.println("UserService.register Invoked!");
 		

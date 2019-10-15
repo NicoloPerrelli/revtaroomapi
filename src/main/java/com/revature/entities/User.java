@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,13 +50,18 @@ public class User {
 	@Column(name="PASSWORD")
 	private String password;
 	
-//	@OneToOne(cascade= {CascadeType.ALL})
-//	@JoinColumn(name="USER_PROFILE_FK")
-//	private UserProfile profile;
+	@OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "user")
+    private UserProfile userProfile;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="USER_ROLE_FK")
 	private Role role;
+	
+	 @OneToOne(cascade = CascadeType.ALL)
+	 @JoinColumn(name = "HOUSING_ID", referencedColumnName = "id")
+	    private Address address;
 	
 	
 	
@@ -63,13 +69,24 @@ public class User {
 		super();
 	}
 	
-	public User(String firstName, String lastName, String username, String email, String password) {
+	
+	
+	public User(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
+
+
+	public User(String firstName, String lastName, String username, String email, String password, Role role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.role = role;
 	}
 
 	public User(int id, String firstName, String lastName, String username, String email, String password) {
@@ -81,6 +98,22 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
+	
+
+	public User(int id, String firstName, String lastName, String username, String email, String password,
+			UserProfile userProfile, Role role) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.userProfile = userProfile;
+		this.role = role;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -130,13 +163,13 @@ public class User {
 		this.password = password;
 	}
 
-//	public UserProfile getProfile() {
-//		return profile;
-//	}
-//
-//	public void setProfile(UserProfile profile) {
-//		this.profile = profile;
-//	}
+	public UserProfile getProfile() {
+		return userProfile;
+	}
+
+	public void setProfile(UserProfile profile) {
+		this.userProfile = profile;
+	}
 
 	public Role getRole() {
 		return role;
@@ -157,10 +190,14 @@ public void copyFields(User copy) {
 		return new Principal(this.id, this.email, this.role.toString());
 	}
 
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, firstName, id, lastName, password, role, username);
+		return Objects.hash(email, firstName, id, lastName, password, role, userProfile, username);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -171,16 +208,19 @@ public void copyFields(User copy) {
 		User other = (User) obj;
 		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName) && id == other.id
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
-				//&& Objects.equals(profile, other.profile) && Objects.equals(role, other.role)
+				&& Objects.equals(role, other.role) && Objects.equals(userProfile, other.userProfile)
 				&& Objects.equals(username, other.username);
 	}
+
+
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-				+ ", email=" + email + ", password=" + password + ", role=" + role + "]";
+				+ ", email=" + email + ", password=" + password + ", userProfile=" + userProfile + ", role=" + role
+				+ "]";
 	}
-	
+
 	
 	
 	

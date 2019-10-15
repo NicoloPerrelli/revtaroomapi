@@ -2,13 +2,16 @@ package com.revature.entities;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="ADDRESS")
@@ -20,15 +23,19 @@ public class Address {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
+	@NotNull
 	@Column(name="STREET_ADDRESS")
 	private String streetAddress;
 	
+	@NotNull
 	@Column(name="CITY")
 	private String city;
 	
+	@NotNull
 	@Column(name="STATE")
 	private String state;
 	
+	@NotNull
 	@Column(name="ZIP_CODE")
 	private String zipCode;
 	
@@ -37,6 +44,9 @@ public class Address {
 	
 	@Column(name="LONGITUDE")
 	private String longitude;
+	
+	@OneToOne(mappedBy= "ADDRESS", cascade= {CascadeType.ALL})
+	private Housing housing;
 
 	public Address() {
 		super();
@@ -62,6 +72,21 @@ public class Address {
 		this.zipCode = zipCode;
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+	
+	
+
+	public Address(int id, String streetAddress, String city, String state, String zipCode, String latitude,
+			String longitude, Housing housing) {
+		super();
+		this.id = id;
+		this.streetAddress = streetAddress;
+		this.city = city;
+		this.state = state;
+		this.zipCode = zipCode;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.housing = housing;
 	}
 
 	public int getId() {
@@ -120,9 +145,17 @@ public class Address {
 		this.longitude = longitude;
 	}
 
+	public Housing getHousing() {
+		return housing;
+	}
+
+	public void setHousing(Housing housing) {
+		this.housing = housing;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(city, id, latitude, longitude, state, streetAddress, zipCode);
+		return Objects.hash(city, housing, id, latitude, longitude, state, streetAddress, zipCode);
 	}
 
 	@Override
@@ -132,20 +165,20 @@ public class Address {
 		if (!(obj instanceof Address))
 			return false;
 		Address other = (Address) obj;
-		return Objects.equals(city, other.city) && id == other.id && Objects.equals(latitude, other.latitude)
-				&& Objects.equals(longitude, other.longitude) && Objects.equals(state, other.state)
-				&& Objects.equals(streetAddress, other.streetAddress) && Objects.equals(zipCode, other.zipCode);
+		return Objects.equals(city, other.city) && Objects.equals(housing, other.housing) && id == other.id
+				&& Objects.equals(latitude, other.latitude) && Objects.equals(longitude, other.longitude)
+				&& Objects.equals(state, other.state) && Objects.equals(streetAddress, other.streetAddress)
+				&& Objects.equals(zipCode, other.zipCode);
 	}
 
 	@Override
 	public String toString() {
 		return "Address [id=" + id + ", streetAddress=" + streetAddress + ", city=" + city + ", state=" + state
-				+ ", zipCode=" + zipCode + ", latitude=" + latitude + ", longitude=" + longitude + "]";
+				+ ", zipCode=" + zipCode + ", latitude=" + latitude + ", longitude=" + longitude + ", housing="
+				+ housing + "]";
 	}
 
 	
-
-
 	
 	
 	

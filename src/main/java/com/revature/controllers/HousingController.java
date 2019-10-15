@@ -2,6 +2,8 @@ package com.revature.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.dtos.Principal;
 import com.revature.entities.Housing;
 import com.revature.exceptions.BadRequestException;
 import com.revature.services.HousingService;
@@ -45,9 +48,10 @@ public class HousingController {
 	}
 	
 	@PostMapping(produces="application/json")
-	public Housing postHouses(@RequestBody Housing housing) {
+	public Housing postHouses(@RequestBody Housing housing, HttpServletRequest req) {
 		System.out.println("In postHouses controller...");
-		
+//		Principal principal = (Principal) req.getAttribute("principal");
+		System.out.println("Housing " + housing.toString() );
 		return this.housingService.addHousing(housing);
 	}
 	

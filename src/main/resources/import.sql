@@ -10,10 +10,10 @@ INSERT INTO training_type (TRAINING_ID, TRAINING_TYPE) Values(3, 'C#');
 INSERT INTO training_type (TRAINING_ID, TRAINING_TYPE) Values(4, 'ANGULAR');
 
 
-INSERT INTO users (USER_ID, EMAIL, FIRST_NAME, LAST_NAME, USERNAME, PASSWORD) VALUES (1,'nwilliams@gmail.com','Nigel','Williams', 'nwilliams', 'p4ssw0rd', 1);
-INSERT INTO users (USER_ID, EMAIL, FIRST_NAME, LAST_NAME, USERNAME, PASSWORD) VALUES (3, 'snavy@yahoo.com','Shantoy','Navy','snavy', 'p2ssw0rd', 2);
-INSERT INTO users (USER_ID, EMAIL, FIRST_NAME, LAST_NAME, USERNAME, PASSWORD) VALUES (4, 'adesiel@gmail.com', 'Allure',  'Desiel', 'adesiel', 'p3ssw0rd', 3);
-INSERT INTO users (USER_ID, EMAIL, FIRST_NAME, LAST_NAME, USERNAME, PASSWORD) VALUES (5,'jnotchan@outlook.com','Jackie', 'Notchan', 'jnotchan', 'p0ssw0rd', 4);
+INSERT INTO users VALUES (1,'test@example.com','Nigel','Williams', 'p4ssw0rd', 'example', 1);
+INSERT INTO users VALUES (3, 'snavy@yahoo.com','Shantoy','Navy','snavy', 'p2ssw0rd', 2);
+INSERT INTO users VALUES (4, 'adesiel@gmail.com', 'Allure',  'Desiel', 'adesiel', 'p3ssw0rd', 3);
+INSERT INTO users VALUES (5,'jnotchan@outlook.com','Jackie', 'Notchan', 'jnotchan', 'p0ssw0rd', 4);
 
 
 INSERT INTO USER_PROFILE (ID, DESCRIPTION, TRAINING_TYPE_FK, USER_USER_ID) VALUES (1, 'HELP ME NOT', 1, 1);

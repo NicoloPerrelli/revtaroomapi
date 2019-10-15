@@ -58,8 +58,6 @@ public class UserController {
 		userService.updateUser(updatedUser);
 	}
 	
-	
-	
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.CONFLICT)
 	public ErrorResponse handleResourceNotFoundException(ResourceCreationException rnfe) {

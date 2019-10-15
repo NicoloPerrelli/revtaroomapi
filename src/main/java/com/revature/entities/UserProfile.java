@@ -28,7 +28,7 @@ public class UserProfile {
 	private String description;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
@@ -40,6 +40,21 @@ public class UserProfile {
 	public UserProfile() {
 		super();
 	}
+
+	
+
+
+	public UserProfile(User user) {
+		super();
+		this.user = user;
+	}
+	
+	public UserProfile(int id) {
+		super();
+		this.id = id;
+	}
+	
+
 
 
 

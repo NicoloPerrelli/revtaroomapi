@@ -37,11 +37,11 @@ public class Housing {
 	@Column(name="PRICE_PER_MONTH")
 	private double pricePerMonth;
 	
-	@OneToOne(mappedBy= "HOUSING", cascade= {CascadeType.ALL})
+	@OneToOne(cascade= {CascadeType.ALL})
 	private User user;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id", referencedColumnName = "id")
+	@JoinColumn(name = "ADDRESS_FK")
 	private Address address;
 
 	public Housing() {

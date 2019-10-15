@@ -24,6 +24,10 @@ public class Address {
 	private int id;
 	
 	@NotNull
+	@Column(name="HOUSE_NUMBER")
+	private String houseNumber;
+	
+	@NotNull
 	@Column(name="STREET_ADDRESS")
 	private String streetAddress;
 	
@@ -45,7 +49,7 @@ public class Address {
 	@Column(name="LONGITUDE")
 	private String longitude;
 	
-	@OneToOne(mappedBy= "ADDRESS", cascade= {CascadeType.ALL})
+	@OneToOne(cascade= {CascadeType.ALL})
 	private Housing housing;
 
 	public Address() {
@@ -76,10 +80,11 @@ public class Address {
 	
 	
 
-	public Address(int id, String streetAddress, String city, String state, String zipCode, String latitude,
-			String longitude, Housing housing) {
+	public Address(int id, @NotNull String houseNumber, @NotNull String streetAddress, @NotNull String city,
+			@NotNull String state, @NotNull String zipCode, String latitude, String longitude, Housing housing) {
 		super();
 		this.id = id;
+		this.houseNumber = houseNumber;
 		this.streetAddress = streetAddress;
 		this.city = city;
 		this.state = state;
@@ -95,6 +100,15 @@ public class Address {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+
+	public String getHouseNumber() {
+		return houseNumber;
+	}
+
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
 	public String getStreetAddress() {
@@ -155,7 +169,7 @@ public class Address {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(city, housing, id, latitude, longitude, state, streetAddress, zipCode);
+		return Objects.hash(city, houseNumber, housing, id, latitude, longitude, state, streetAddress, zipCode);
 	}
 
 	@Override
@@ -165,20 +179,19 @@ public class Address {
 		if (!(obj instanceof Address))
 			return false;
 		Address other = (Address) obj;
-		return Objects.equals(city, other.city) && Objects.equals(housing, other.housing) && id == other.id
-				&& Objects.equals(latitude, other.latitude) && Objects.equals(longitude, other.longitude)
-				&& Objects.equals(state, other.state) && Objects.equals(streetAddress, other.streetAddress)
-				&& Objects.equals(zipCode, other.zipCode);
+		return Objects.equals(city, other.city) && Objects.equals(houseNumber, other.houseNumber)
+				&& Objects.equals(housing, other.housing) && id == other.id && Objects.equals(latitude, other.latitude)
+				&& Objects.equals(longitude, other.longitude) && Objects.equals(state, other.state)
+				&& Objects.equals(streetAddress, other.streetAddress) && Objects.equals(zipCode, other.zipCode);
 	}
 
 	@Override
 	public String toString() {
-		return "Address [id=" + id + ", streetAddress=" + streetAddress + ", city=" + city + ", state=" + state
-				+ ", zipCode=" + zipCode + ", latitude=" + latitude + ", longitude=" + longitude + ", housing="
-				+ housing + "]";
+		return "Address [id=" + id + ", houseNumber=" + houseNumber + ", streetAddress=" + streetAddress + ", city="
+				+ city + ", state=" + state + ", zipCode=" + zipCode + ", latitude=" + latitude + ", longitude="
+				+ longitude + ", housing=" + housing + "]";
 	}
 
-	
 	
 	
 	

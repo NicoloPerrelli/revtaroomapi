@@ -12,17 +12,17 @@ INSERT INTO training_type Values(4, 'ANGULAR');
 
 
 
-INSERT INTO users VALUES (1,'nwilliams@gmail.com','Nigel','Williams', 'nwilliams', 'p4ssw0rd', 1);
-INSERT INTO users VALUES (3, 'snavy@yahoo.com','Shantoy','Navy','snavy', 'p2ssw0rd', 2);
-INSERT INTO users VALUES (4, 'adesiel@gmail.com', 'Allure',  'Desiel', 'adesiel', 'p3ssw0rd', 3);
-INSERT INTO users VALUES (5,'jnotchan@outlook.com','Jackie', 'Notchan', 'jnotchan', 'p0ssw0rd', 4);
+INSERT INTO users  VALUES (1,'nwilliams@gmail.com','Nigel','Williams', 'nwilliams', 'p4ssw0rd', 1);
+INSERT INTO users  VALUES (3, 'snavy@yahoo.com','Shantoy','Navy','snavy', 'p2ssw0rd', 2);
+INSERT INTO users  VALUES (4, 'adesiel@gmail.com', 'Allure',  'Desiel', 'adesiel', 'p3ssw0rd', 3);
+INSERT INTO users  VALUES (5,'jnotchan@outlook.com','Jackie', 'Notchan', 'jnotchan', 'p0ssw0rd', 4);
 
 
 INSERT INTO USER_PROFILE VALUES (1, 'HELP ME NOT', 1, 1);
 INSERT INTO USER_PROFILE VALUES (2, 'HELP ME NOT', 5, 2);
 INSERT INTO USER_PROFILE VALUES (3, 'HELP ME NOT', 2, 3);
 INSERT INTO USER_PROFILE VALUES (4, 'HELP ME NOT', 4, 4);
-INSERT INTO USER_PROFILE VALUES (5, 'HELP ME NOT', 3, );
+INSERT INTO USER_PROFILE VALUES (5, 'HELP ME NOT', 3, 5);
 
 INSERT INTO ADDRESS VALUES (1, 'Tampa', NULL, NULL, 'FL', 231, 'Rose Street', 11400);
 INSERT INTO ADDRESS VALUES (2, 'Tampa', NULL, NULL, 'FL', 232, 'Grape Street', 11401);

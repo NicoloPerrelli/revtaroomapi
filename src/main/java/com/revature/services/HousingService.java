@@ -35,7 +35,7 @@ public class HousingService {
 	
 	@Transactional()
 	public Housing addHousing(Housing house) {
-		
+		System.out.println("In service addHousing...");
 		house = housingRepo.save(house);
 		return house;
 	}

@@ -12,10 +12,10 @@ INSERT INTO training_type Values(4, 'ANGULAR');
 
 
 
-INSERT INTO users  VALUES (1,'nwilliams@gmail.com','Nigel','Williams', 'nwilliams', 'p4ssw0rd', 1);
-INSERT INTO users  VALUES (3, 'snavy@yahoo.com','Shantoy','Navy','snavy', 'p2ssw0rd', 2);
-INSERT INTO users  VALUES (4, 'adesiel@gmail.com', 'Allure',  'Desiel', 'adesiel', 'p3ssw0rd', 3);
-INSERT INTO users  VALUES (5,'jnotchan@outlook.com','Jackie', 'Notchan', 'jnotchan', 'p0ssw0rd', 4);
+INSERT INTO users (id, email, firstName, lastName, username, password) VALUES (1,'nwilliams@gmail.com','Nigel','Williams', 'nwilliams', 'p4ssw0rd', 1);
+INSERT INTO users (id, email, firstName, lastName, username, password) VALUES (3, 'snavy@yahoo.com','Shantoy','Navy','snavy', 'p2ssw0rd', 2);
+INSERT INTO users (id, email, firstName, lastName, username, password) VALUES (4, 'adesiel@gmail.com', 'Allure',  'Desiel', 'adesiel', 'p3ssw0rd', 3);
+INSERT INTO users (id, email, firstName, lastName, username, password) VALUES (5,'jnotchan@outlook.com','Jackie', 'Notchan', 'jnotchan', 'p0ssw0rd', 4);
 
 
 INSERT INTO USER_PROFILE VALUES (1, 'HELP ME NOT', 1, 1);
@@ -24,11 +24,11 @@ INSERT INTO USER_PROFILE VALUES (3, 'HELP ME NOT', 2, 3);
 INSERT INTO USER_PROFILE VALUES (4, 'HELP ME NOT', 4, 4);
 INSERT INTO USER_PROFILE VALUES (5, 'HELP ME NOT', 3, 
 
-INSERT INTO ADDRESS VALUES (1, 'Tampa', NULL, NULL, 'FL', 231, 'Rose Street', 11400);
-INSERT INTO ADDRESS VALUES (2, 'Tampa', NULL, NULL, 'FL', 232, 'Grape Street', 11401);
-INSERT INTO ADDRESS VALUES (3, 'Tampa', NULL, NULL, 'FL', 233, 'Orange Street', 11402);
-INSERT INTO ADDRESS VALUES (4, 'Tampa', NULL, NULL, 'FL', 234, 'Mango Street', 11403);
-INSERT INTO ADDRESS VALUES (5, 'Tampa', NULL, NULL, 'FL', 235, 'Apple Street', 11404);
+INSERT INTO ADDRESS (id, city, lattitude, longitude, state, street address, zipcode) VALUES (1, 'Tampa', NULL, NULL, 'FL', '231 Rose Street', 11400);
+INSERT INTO ADDRESS (id, city, lattitude, longitude, state, street address, zipcode)  VALUES (2, 'Tampa', NULL, NULL, 'FL', '232 Grape Street', 11401);
+INSERT INTO ADDRESS (id, city, lattitude, longitude, state, street address, zipcode)  VALUES (3, 'Tampa', NULL, NULL, 'FL', '233 Orange Street', 11402);
+INSERT INTO ADDRESS (id, city, lattitude, longitude, state, street address, zipcode)  VALUES (4, 'Tampa', NULL, NULL, 'FL', '234 Mango Street', 11403);
+INSERT INTO ADDRESS (id, city, lattitude, longitude, state, street address, zipcode)  VALUES (5, 'Tampa', NULL, NULL, 'FL', '235 Apple Street', 11404);
 
 
 INSERT INTO HOUSING VALUES (1, 'Anything', 800.00, 1, 1);
@@ -42,3 +42,5 @@ INSERT INTO ROOM_FOR_RENT VALUES (2, 400, 2);
 INSERT INTO ROOM_FOR_RENT VALUES (3, 500, 3);
 INSERT INTO ROOM_FOR_RENT VALUES (4, 600, 4);
 INSERT INTO ROOM_FOR_RENT VALUES (5, 700, 5);
+
+

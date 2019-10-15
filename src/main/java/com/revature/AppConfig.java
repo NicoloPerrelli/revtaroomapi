@@ -44,6 +44,7 @@ public class AppConfig implements WebMvcConfigurer, WebApplicationInitializer {
 	
 	@Bean
 	public BasicDataSource dataSource() {
+		System.out.println("Username: " + dbUsername);
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(dbDriver);
 		dataSource.setUrl(dbUrl);

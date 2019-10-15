@@ -62,9 +62,11 @@ public class AuthFilter extends OncePerRequestFilter {
 		try {
 			
 			Claims claims = Jwts.parser()
-					.setSigningKey(JwtConfig.SIGNING_KEY)
+					.setSigningKey(JwtConfig.SECRET.getBytes())
 					.parseClaimsJws(token)
 					.getBody();
+			
+			System.out.println("After claims");
 			
 			Principal principal = new Principal();
 			principal.setId(Integer.parseInt(claims.getId()));
@@ -97,4 +99,3 @@ public class AuthFilter extends OncePerRequestFilter {
 		resp.setHeader("Access-Control-Expose-Headers", "Authorization");
 	}
 }
-

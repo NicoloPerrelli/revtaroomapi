@@ -10,14 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.revature.dtos.Credentials;
 import com.revature.entities.Role;
 import com.revature.entities.User;
+import com.revature.entities.UserProfile;
 import com.revature.exceptions.BadRequestException;
 import com.revature.exceptions.ResourceNotFoundException;
+import com.revature.repos.UserProfileRepository;
 import com.revature.repos.UserRepository;
 
 @Service
 public class UserServices {
 
 	private UserRepository userRepo;
+	private UserProfileRepository userProRepo;
 
 	@Autowired
 	public UserServices(UserRepository repo) {
@@ -82,7 +85,7 @@ public class UserServices {
 	}
 	
 
-	@Transactional(isolation=Isolation.DEFAULT)
+	@Transactional
 	public User register(User newUser) {
 		System.out.println("UserService.register Invoked!");
 		
@@ -104,7 +107,10 @@ public class UserServices {
 		
 		System.out.println("Setting role of new users to \"USER\"");
 		newUser.setRole(new Role("USER"));
+		//newUser.setProfile(new UserProfile(6));
 		
+		//UserProfile profile = new UserProfile(newUser.getId());
+		//userProRepo.save(profile);
 		return userRepo.save(newUser);
 	}
 	

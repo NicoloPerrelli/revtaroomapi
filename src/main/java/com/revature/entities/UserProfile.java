@@ -5,6 +5,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,9 +27,9 @@ public class UserProfile {
 	@Column(name="DESCRIPTION")
 	private String description;
 	
-	@OneToOne(cascade= {CascadeType.ALL})
-	@JoinColumn
-	private User user;
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="TRAINING_TYPE_FK")
@@ -39,8 +40,19 @@ public class UserProfile {
 	public UserProfile() {
 		super();
 	}
+
 	
+
+
+	public UserProfile(User user) {
+		super();
+		this.user = user;
+	}
 	
+	public UserProfile(int id) {
+		super();
+		this.id = id;
+	}
 	
 	public UserProfile(String description, User user, TrainingType trainingType) {
 		super();

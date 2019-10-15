@@ -34,7 +34,7 @@ public class UserProfile {
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="TRAINING_TYPE_FK")
 	private TrainingType trainingType;
-
+	
 	
 	
 	public UserProfile() {
@@ -54,10 +54,6 @@ public class UserProfile {
 		this.id = id;
 	}
 	
-
-
-
-
 	public UserProfile(String description, User user, TrainingType trainingType) {
 		super();
 		this.description = description;

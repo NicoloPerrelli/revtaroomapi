@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dtos.BrokenHousing;
 import com.revature.entities.Address;
 import com.revature.entities.Housing;
@@ -15,6 +19,7 @@ import com.revature.exceptions.BadRequestException;
 import com.revature.repos.AddressRepository;
 import com.revature.repos.HousingRepo;
 import com.revature.repos.UserRepository;
+import com.revature.util.UrlEncoding;
 
 @Service
 public class HousingService {
@@ -83,5 +88,24 @@ public class HousingService {
 		
 		return house;
 	}
+	
+//	private Housing gettingCoordinates(Address addr) {
+//		
+//		String url = "https://api.opencagedata.com/geocode/v1/json?q=";
+//		String queryAddr = UrlEncoding.encodeValue(
+//				addr.getStreetAddress() + ", " +
+//				addr.getCity() + ", " +
+//				addr.getState() + ", United States");
+//		url += queryAddr;
+//		
+//		// Fetch API
+//		RestTemplate restTemplate = new RestTemplate();
+//		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+//		
+//		// Map JSON with Jackson
+////		ObjectMapper mapper = new ObjectMapper();
+////		JsonNode body = mapper.readTree(response.getBody()).findValue("results").get(0).findValue("geometry");
+////		
+//	}
 	
 }

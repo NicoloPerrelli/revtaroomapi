@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 
 @NamedQueries({
 	@NamedQuery(name="getHouseByUserId", query="from Housing h where h.user = :user")
+
 })
 
 @Entity

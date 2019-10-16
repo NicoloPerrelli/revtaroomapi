@@ -50,6 +50,8 @@ public class UserController {
 		return userService.getUserById(id);
 	}
 	
+	
+	
 	@ResponseStatus( HttpStatus.CREATED)
 	@PostMapping(value="/register", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public User addUser(@RequestBody User newUser) {

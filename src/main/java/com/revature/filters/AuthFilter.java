@@ -29,7 +29,6 @@ public class AuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws ServletException, IOException {
 
-
     	//log.info("Request intercepted by TokenAuthFilter.doFilter");
     		extractPrincipal(req);
     		attachCorsResponseHeaders(resp);

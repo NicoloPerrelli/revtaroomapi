@@ -30,6 +30,7 @@ public class AuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws ServletException, IOException {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//log.info("Request intercepted by TokenAuthFilter.doFilter");
 		extractPrincipal(req);
 		System.out.println("attaching Cors resp headers");
@@ -103,6 +104,8 @@ public class AuthFilter extends OncePerRequestFilter {
 }
 =======
 
+=======
+>>>>>>> d4068167d839d2bf58549762510cc025d557f193
     	//log.info("Request intercepted by TokenAuthFilter.doFilter");
     		extractPrincipal(req);
     		attachCorsResponseHeaders(resp);
@@ -171,4 +174,7 @@ public class AuthFilter extends OncePerRequestFilter {
     		resp.setHeader("Access-Control-Expose-Headers", "Authorization");
     	}
   }
+<<<<<<< HEAD
 >>>>>>> bff9438aa394bd90db22b1cb89e3a136a9c26b0d
+=======
+>>>>>>> d4068167d839d2bf58549762510cc025d557f193

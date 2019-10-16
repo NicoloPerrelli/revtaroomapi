@@ -31,6 +31,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
 	//log.info("Request intercepted by TokenAuthFilter.doFilter");
 		extractPrincipal(req);
+		System.out.println("attaching Cors resp headers");
 		attachCorsResponseHeaders(resp);
 		chain.doFilter(req, resp);
 		return;

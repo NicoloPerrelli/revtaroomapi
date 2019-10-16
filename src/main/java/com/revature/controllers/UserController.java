@@ -45,6 +45,7 @@ public class UserController {
 		return userService.getAll();
 	}
 	
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value="/{id}", produces="application/json")
 	public User getCardById(@PathVariable int id) {
 		return userService.getUserById(id);
@@ -58,7 +59,7 @@ public class UserController {
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PatchMapping(produces="application/json", consumes="application/json")
-	public void updateCard(@RequestBody User updatedUser) {
+	public void updateUser(@RequestBody User updatedUser) {
 		userService.updateUser(updatedUser);
 	}
 	
@@ -66,28 +67,11 @@ public class UserController {
 	@ResponseStatus(HttpStatus.CONFLICT)
 	public ErrorResponse handleResourceNotFoundException(ResourceCreationException rnfe) {
 		ErrorResponse err = new ErrorResponse();
-		err.setStatus(404);
+		err.setStatus(409);
 		err.setMessage(rnfe.getMessage());
 		err.setTimestamp(System.currentTimeMillis());
 		return err;
 	}
 	
-	@ExceptionHandler
-    public ErrorResponse handleSecurityException(SecurityException se, HttpServletResponse resp) {
-        
-        String exMessage = se.getMessage();
-        ErrorResponse err = new ErrorResponse();
-        err.setMessage(exMessage);
-        err.setTimestamp(System.currentTimeMillis());
-        
-        if(exMessage.contains("forbidden")) {
-            resp.setStatus(HttpStatus.FORBIDDEN.value());
-            err.setStatus(HttpStatus.FORBIDDEN.value());
-        } else if(exMessage.contains("unauthorized")) {
-            resp.setStatus(HttpStatus.UNAUTHORIZED.value());
-            err.setStatus(HttpStatus.UNAUTHORIZED.value());
-        }
-        
-        return err;
-    }
+	
 }

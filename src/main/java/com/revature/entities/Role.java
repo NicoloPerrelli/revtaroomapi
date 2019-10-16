@@ -10,7 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Data
+@Getter @Setter @NoArgsConstructor @RequiredArgsConstructor
 @Table(name="USER_ROLE")
 @SequenceGenerator(name="role_pk_gen", sequenceName="role_seq", allocationSize=1)
 public class Role {
@@ -104,6 +112,6 @@ public class Role {
 	
 	
 	
-	
+
 	
 }

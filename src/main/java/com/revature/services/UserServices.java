@@ -109,9 +109,14 @@ public class UserServices {
 		newUser.setRole(new Role("USER"));
 		//newUser.setProfile(new UserProfile(6));
 		
-		//UserProfile profile = new UserProfile(newUser.getId());
-		//userProRepo.save(profile);
-		return userRepo.save(newUser);
+		
+		userRepo.save(newUser);
+		System.out.println(newUser);
+		//profile.setUser(newUser.getId());
+		UserProfile profile = new UserProfile(newUser);
+		System.out.println(profile);
+		System.out.println(profile.getUser().getId());
+		return newUser;
 	}
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)

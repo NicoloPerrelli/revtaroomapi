@@ -14,6 +14,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @NamedQueries({
 	@NamedQuery(name="getHouseByUserId", query="from Housing h where h.user = :user")
@@ -29,18 +30,18 @@ public class Housing {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
+	@NotNull
 	@Column(name="DESCRIPTION")
 	private String description;
-	
+	@NotNull
 	@Column(name="PRICE_PER_MONTH")
 	private double pricePerMonth;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="USER_FK")
 	private User user;
 	
-	@OneToOne(cascade= {CascadeType.ALL})
-	@JoinColumn
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ADDRESS_FK")
 	private Address address;
 
 	public Housing() {

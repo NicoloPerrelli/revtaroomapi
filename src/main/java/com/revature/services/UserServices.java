@@ -2,6 +2,7 @@ package com.revature.services;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -20,11 +21,13 @@ import com.revature.repos.UserRepository;
 public class UserServices {
 
 	private UserRepository userRepo;
-	private UserProfileRepository userProRepo;
+	private ProfileService profileService;
+	
 
 	@Autowired
-	public UserServices(UserRepository repo) {
+	public UserServices(UserRepository repo, ProfileService profs) {
 		this.userRepo = repo;
+		this.profileService = profs;
 	}
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
@@ -107,15 +110,23 @@ public class UserServices {
 		
 		System.out.println("Setting role of new users to \"USER\"");
 		newUser.setRole(new Role("USER"));
-		//newUser.setProfile(new UserProfile(6));
 		
-		
-		userRepo.save(newUser);
 		System.out.println(newUser);
-		//profile.setUser(newUser.getId());
-		UserProfile profile = new UserProfile(newUser);
+		
+		UserProfile profile = new UserProfile();
+		//use this 
+		newUser.setProfile(profile);
+	
+		
 		System.out.println(profile);
-		System.out.println(profile.getUser().getId());
+		
+		//profile.setDescription("hello");
+		//infimite loop
+		//newUser.setProfile(new UserProfile(newUser));
+		System.out.println(profile);
+		profileService.newProfile(profile);
+	    userRepo.save(newUser);
+		
 		return newUser;
 	}
 	

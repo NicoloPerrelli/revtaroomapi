@@ -19,11 +19,19 @@ import javax.validation.constraints.NotNull;
 
 import com.revature.dtos.Principal;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @NamedQueries({ @NamedQuery(name = "getByUsername", query = "from User u where u.username = :un"),
 		@NamedQuery(name = "getByEmail", query = "from User u where u.email = :email"),
 		@NamedQuery(name = "getUserByCredentials", query = "from User u where u.email = :un and u.password = :pw") })
 
 @Entity
+@Data
+@Getter @Setter @NoArgsConstructor @RequiredArgsConstructor
 @Table(name = "USERS")
 @SequenceGenerator(name = "id_pk", sequenceName = "user_seq", allocationSize = 1)
 public class User {
@@ -52,7 +60,7 @@ public class User {
 	@Column(name = "PASSWORD")
 	private String password;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="user")
 	private UserProfile userProfile;
 
 	@OneToOne(cascade = { CascadeType.ALL })
@@ -65,6 +73,13 @@ public class User {
 
 	public User() {
 		super();
+	}
+	
+	
+	public User(UserProfile profile) {
+		super();
+		this.userProfile = profile;
+		this.setProfile(profile);
 	}
 
 	public User(String email, String password) {
@@ -193,7 +208,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(housing, email, firstName, id, lastName, password, role, userProfile, username);
+		return Objects.hash(email, firstName, housing, id, lastName, password, role, userProfile, username);
 	}
 
 	@Override
@@ -203,18 +218,18 @@ public class User {
 		if (!(obj instanceof User))
 			return false;
 		User other = (User) obj;
-		return Objects.equals(housing, other.housing) && Objects.equals(email, other.email)
-				&& Objects.equals(firstName, other.firstName) && id == other.id
-				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
-				&& Objects.equals(role, other.role) && Objects.equals(userProfile, other.userProfile)
-				&& Objects.equals(username, other.username);
+		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(housing, other.housing) && id == other.id && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(password, other.password) && Objects.equals(role, other.role)
+				&& Objects.equals(userProfile, other.userProfile) && Objects.equals(username, other.username);
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
 				+ ", email=" + email + ", password=" + password + ", userProfile=" + userProfile + ", role=" + role
-				+ ", address=" + housing + "]";
+				+ ", housing=" + housing + "]";
 	}
 
+	
 }

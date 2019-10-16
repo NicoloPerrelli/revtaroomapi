@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.entities.User;
+import com.revature.entities.UserProfile;
 import com.revature.exceptions.ErrorResponse;
 import com.revature.exceptions.ResourceCreationException;
 import com.revature.security.Secured;
+import com.revature.services.ProfileService;
 import com.revature.services.UserServices;
 
 @RestController
@@ -29,9 +31,11 @@ public class UserController {
 
 	private UserServices userService;
 	
+	
 	@Autowired
 	public UserController(UserServices service) {
 		this.userService = service;
+		
 	}
 	
 	@Secured(allowedRoles = { "ADMIN", "DEV" })

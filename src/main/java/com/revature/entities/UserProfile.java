@@ -27,8 +27,8 @@ public class UserProfile {
 	@Column(name="DESCRIPTION")
 	private String description;
 	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID", nullable = false)
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
     private User user;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
@@ -39,13 +39,21 @@ public class UserProfile {
 	
 	public UserProfile() {
 		super();
+		
 	}
-
-	
-
 
 	public UserProfile(User user) {
 		super();
+		this.user = user;
+		this.setUser(user);
+		
+	}
+
+
+
+	public UserProfile(String description, User user) {
+		super();
+		this.description = description;
 		this.user = user;
 	}
 	
@@ -54,11 +62,10 @@ public class UserProfile {
 		this.id = id;
 	}
 	
-	public UserProfile(String description, User user, TrainingType trainingType) {
+	public UserProfile(String description) {
 		super();
 		this.description = description;
-		this.user = user;
-		this.trainingType = trainingType;
+		
 	}
 
 
@@ -70,7 +77,6 @@ public class UserProfile {
 		this.user = user;
 		this.trainingType = trainingType;
 	}
-
 
 
 	public int getId() {

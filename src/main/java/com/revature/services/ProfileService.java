@@ -26,17 +26,6 @@ public class ProfileService {
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public boolean updateProfile(UserProfile upadatedProfile) {
 		System.out.println("ProfileService.updateProfile Invoked!");
-		if(!validateProfileFields(upadatedProfile)) { 
-			System.out.println("Invalid fields found on object!");
-			return false;
-		}
 		return profileReop.update(upadatedProfile);
-	}
-	
-	private boolean validateProfileFields(UserProfile profile) {
-		System.out.println("Validating User fields...");
-		if(profile.getDescription() == null || profile.getDescription().trim().equals("")) return false;
-		if(profile.getTrainingType() == null) return false;
-		return true;
 	}
 }

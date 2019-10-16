@@ -10,10 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.dtos.Credentials;
 import com.revature.entities.Role;
+import com.revature.entities.TrainingType;
 import com.revature.entities.User;
 import com.revature.entities.UserProfile;
 import com.revature.exceptions.BadRequestException;
+import com.revature.exceptions.ResourceCreationException;
 import com.revature.exceptions.ResourceNotFoundException;
+import com.revature.exceptions.SecurityExceptions;
+import com.revature.exceptions.Unauthorized;
 import com.revature.repos.UserProfileRepository;
 import com.revature.repos.UserRepository;
 
@@ -48,6 +52,7 @@ public class UserServices {
 
 		if (email == null || email.equals("")) {
 			System.out.println("non-value provided for username!");
+			
 			return null;
 		}
 
@@ -81,7 +86,7 @@ public class UserServices {
 		User retrievedUser = userRepo.getUserByCredentials(creds.getEmail(), creds.getPassword());
 		
 		if(retrievedUser == null) {
-			throw new SecurityException("No user found with provided credentials");
+			throw new SecurityExceptions("No user found with provided credentials");
 		}
 		
 		return retrievedUser;
@@ -105,7 +110,8 @@ public class UserServices {
 		
 		if(!usernameAvailable && !emailAvailable ) {
 			System.out.println("Provided username/email is already taken - user not created");
-			return null;
+			throw new ResourceCreationException("Provided username/email is already taken - user not created");
+			
 		}
 		
 		System.out.println("Setting role of new users to \"USER\"");
@@ -117,6 +123,9 @@ public class UserServices {
 		
 		//set parent and child reference
 		newUser.setProfile(profile);
+		System.out.println("Setting role of new users to \"USER\"");
+		profile.setDescription("Welcome to Revtaroom");
+		profile.setTrainingType(new TrainingType("OTHER"));
 		profile.setUser(newUser);
 	
 		

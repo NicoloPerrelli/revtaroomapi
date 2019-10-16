@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProfileService {
-
+	
 	private UserProfileRepository profileRepo;
-
+	
 	@Autowired
 	public ProfileService(UserProfileRepository repo) {
 		this.profileRepo = repo;
@@ -26,17 +26,13 @@ public class ProfileService {
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public boolean updateProfile(UserProfile upadatedProfile) {
 		System.out.println("ProfileService.updateProfile Invoked!");
-
 		return profileRepo.update(upadatedProfile);
 	}
 	
 	public UserProfile newProfile(UserProfile newProfile) {
 		System.out.println("ProfileService.save Invoked!");
-		
 		profileRepo.save(newProfile);
-	
 		return newProfile;
 	}
-	
 	
 }

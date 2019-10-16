@@ -114,15 +114,14 @@ public class UserServices {
 		System.out.println(newUser);
 		
 		UserProfile profile = new UserProfile();
-		//use this 
+		
+		//set parent and child reference
 		newUser.setProfile(profile);
+		profile.setUser(newUser);
 	
 		
 		System.out.println(profile);
 		
-		//profile.setDescription("hello");
-		//infimite loop
-		//newUser.setProfile(new UserProfile(newUser));
 		System.out.println(profile);
 		profileService.newProfile(profile);
 	    userRepo.save(newUser);

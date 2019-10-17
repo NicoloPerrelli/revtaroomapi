@@ -68,7 +68,6 @@ public class User {
 	private Role role;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "HOUSING_FK")
 	private Housing housing;
 
 	public User() {

@@ -59,14 +59,21 @@ public class UserProfile {
 
 
 
-	public UserProfile(int id, String description, User user, TrainingType trainingType) {
+	public UserProfile(int id, String description, TrainingType trainingType) {
 		super();
 		this.id = id;
 		this.description = description;
 		//this.user = user;
 		this.trainingType = trainingType;
 	}
-
+	
+	public UserProfile(int id, String description, int trainingType) {
+		super();
+		this.id = id;
+		this.description = description;
+		//this.user = user;
+		this.trainingType = new TrainingType(trainingType);
+	}
 
 	public int getId() {
 		return id;

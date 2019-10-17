@@ -60,11 +60,8 @@ public class UserProfileRepository implements CrudRepository<UserProfile> {
 	public boolean updateWithId(int id, UserProfile upadatedProfile) {
 		System.out.println("WE ARE UPDATING WITH THESE - "+id+" / "+upadatedProfile);
 		Session session = factory.getCurrentSession();
-		UserProfile userProfileInDb = session.get(UserProfile.class, upadatedProfile.getId());
-
-		if (userProfileInDb == null)
-			return false;
-
+		UserProfile userProfileInDb = session.get(UserProfile.class, id);
+		System.out.println(userProfileInDb);
 		userProfileInDb.setDescription(upadatedProfile.getDescription());
 		userProfileInDb.setTrainingType(upadatedProfile.getTrainingType());
 

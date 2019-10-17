@@ -17,10 +17,10 @@ public class TrainingType {
 	@Id
 	@Column(name="TRAINING_ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private int id;
+	private int trainingId;
 	
 	@Column(name="TRAINING_TYPE")
-	private String name;
+	private String trainingType;
 	
 	
 	public TrainingType() {
@@ -29,56 +29,56 @@ public class TrainingType {
 	
 
 	public TrainingType(int id) {
-		this.id = id;
+		this.trainingId = id;
 		
 		switch(id) {
 		case 1:
-			name = "JAVA";
+			this.trainingType = "JAVA";
 			break;
 		case 2:
-			name = "ANGULAR";
+			this.trainingType = "ANGULAR";
 			break;
 		case 3:
-			name = "C#";
+			this.trainingType = "C#";
 			break;
 		default:
-			name = "OTHER";
+			this.trainingType = "OTHER";
 		}
 	}
 
 	public TrainingType(String name) {
-		this.name = name;
+		this.trainingType = name;
 		
 		switch(name.toUpperCase()) {
 		case "JAVA":
-			id = 1;
+			this.trainingId = 1;
 			break;
 		case "ANGULAR":
-			id = 2;
+			this.trainingId = 2;
 			break;
 		case "C#":
-			id = 3;
+			this.trainingId = 3;
 			break;
 		default:
-			id = 4;
+			this.trainingId = 4;
 		}
 	}
 	
 
 	public int getId() {
-		return id;
+		return trainingId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.trainingId = id;
 	}
 
 	public String getName() {
-		return name;
+		return trainingType;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.trainingType = name;
 	}
 	
 }

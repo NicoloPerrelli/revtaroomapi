@@ -63,16 +63,17 @@ public class UserProfileRepository implements CrudRepository<UserProfile> {
 		Session session = factory.getCurrentSession();
 		UserProfile userProfileInDb = session.get(UserProfile.class, upadatedProfile.getId());
 		
+		System.out.println("before the change --- "+userProfileInDb);
 		if(userProfileInDb == null)return false;
+		System.out.println(userProfileInDb.getTrainingType().getId());
+		System.out.println(userProfileInDb.getTrainingType().getName());
 		
-		System.out.println("WE ARE UPDATING WITH THESE - "+id+" / "+upadatedProfile+" / "+type);
 		userProfileInDb.setDescription(upadatedProfile.getDescription());
 		userProfileInDb.setTrainingType(new TrainingType(type));
 		
-		System.out.println(userProfileInDb);
+		System.out.println("after the change --- "+userProfileInDb);
 		session.saveOrUpdate(userProfileInDb);
 		
-		System.out.println(userProfileInDb.getDescription());
 		System.out.println(userProfileInDb.getTrainingType().getId());
 		System.out.println(userProfileInDb.getTrainingType().getName());
 		return true;

@@ -24,7 +24,7 @@ public class ProfileService {
 		return profileRepo.getById(id);
 	}
 	
-	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public boolean updateProfile(int id, UserProfile upadatedProfile, int type) {
 		System.out.println("ProfileService.updateProfile Invoked!");
 		return profileRepo.updateWithId(id, upadatedProfile, type);

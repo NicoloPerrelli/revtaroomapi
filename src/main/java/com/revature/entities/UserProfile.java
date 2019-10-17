@@ -39,11 +39,8 @@ public class UserProfile {
 	@JoinColumn(name="TRAINING_TYPE_FK")
 	private TrainingType trainingType;
 	
-	
-	
 	public UserProfile() {
 		super();
-		
 	}
 
 	public UserProfile(int id) {
@@ -54,76 +51,58 @@ public class UserProfile {
 	public UserProfile(String description) {
 		super();
 		this.description = description;
-		
 	}
-
-
+	
+	public UserProfile(String description, TrainingType trainingType) {
+		super();
+		this.description = description;
+		this.trainingType = trainingType;
+	}
 
 	public UserProfile(int id, String description, TrainingType trainingType) {
 		super();
 		this.id = id;
 		this.description = description;
-		//this.user = user;
 		this.trainingType = trainingType;
-	}
-	
-	public UserProfile(int id, String description, int trainingType) {
-		super();
-		this.id = id;
-		this.description = description;
-		//this.user = user;
-		this.trainingType = new TrainingType(trainingType);
 	}
 
 	public int getId() {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public String getDescription() {
 		return description;
 	}
 
-
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
 
 	public User getUser() {
 		return user;
 	}
 
-
-
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-
 
 	public TrainingType getTrainingType() {
 		return trainingType;
 	}
 
-
-
 	public void setTrainingType(TrainingType trainingType) {
 		this.trainingType = trainingType;
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(description, id, trainingType);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -134,16 +113,9 @@ public class UserProfile {
 		return Objects.equals(description, other.description) && id == other.id
 				&& Objects.equals(trainingType, other.trainingType);
 	}
+	
 	@Override
 	public String toString() {
 		return "UserProfile [id=" + id + ", description=" + description + ", trainingType=" + trainingType + "]";
 	}
-
-
-
-	
-
-
-
-	
 }

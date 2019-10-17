@@ -36,13 +36,13 @@ public class TrainingType {
 			this.trainingType = "JAVA";
 			break;
 		case 2:
-			this.trainingType = "ANGULAR";
+			this.trainingType = "DEVOPS";
 			break;
 		case 3:
 			this.trainingType = "C#";
 			break;
 		default:
-			this.trainingType = "OTHER";
+			this.trainingType = "ANGULAR";
 		}
 	}
 
@@ -53,13 +53,33 @@ public class TrainingType {
 		case "JAVA":
 			this.trainingId = 1;
 			break;
-		case "ANGULAR":
+		case "DEVOPS":
 			this.trainingId = 2;
 			break;
 		case "C#":
 			this.trainingId = 3;
 			break;
+		case "ANGULAR":
+			this.trainingId = 4;
+			break;
+		case "1":
+			this.trainingType="JAVA";
+			this.trainingId = 1;
+			break;
+		case "2":
+			this.trainingType="DEVOPS";
+			this.trainingId = 2;
+			break;
+		case "3":
+			this.trainingType="C#";
+			this.trainingId = 3;
+			break;
+		case "4":
+			this.trainingType="ANGULAR";
+			this.trainingId = 4;
+			break;
 		default:
+			this.trainingType="ANGULAR";
 			this.trainingId = 4;
 		}
 	}

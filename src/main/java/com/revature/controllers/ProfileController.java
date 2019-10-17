@@ -43,11 +43,12 @@ public class ProfileController {
 	
 	@PutMapping(produces="application/json", consumes="application/json")
 	public boolean updateProfile(HttpServletRequest req, @RequestBody UserProfile upadatedProfile){
-		System.out.println("\n\n\n\nthe req body " + upadatedProfile + "\n\n\n\n");
+		UserProfile jsonAcceptible = new UserProfile(upadatedProfile.getDescription(),upadatedProfile.getTrainingType());
+		System.out.println("\n\n\n\nthe req body " + jsonAcceptible + "\n\n" + jsonAcceptible.getTrainingType().getId() + "\n\n");
 		Principal principal = (Principal) req.getAttribute("principal");
 		int proId = userServices.getUserById(principal.getId()).getProfile().getId();
 		System.out.println("the user id from jwt " + proId);
-		return profileService.updateProfile(proId,upadatedProfile);
+		return profileService.updateProfile(proId,jsonAcceptible,jsonAcceptible.getTrainingType().getId());
 	}
 	
 	@ExceptionHandler

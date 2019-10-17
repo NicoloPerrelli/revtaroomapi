@@ -12,7 +12,6 @@ import com.revature.entities.Address;
 import com.revature.entities.Housing;
 import com.revature.entities.User;
 import com.revature.exceptions.BadRequestException;
-import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.repos.AddressRepository;
 import com.revature.repos.HousingRepo;
 import com.revature.repos.UserRepository;
@@ -31,12 +30,12 @@ public class HousingService {
 		this.userRepo = userRepo;
 	}
 	
-	@Transactional
+	@Transactional()
 	public List<Housing> getAllHousing() {
 		return housingRepo.getAll();
 	}
 	
-	@Transactional
+	@Transactional()
 	public List<Housing> getHousingById(int id) {
 		List<Housing> list = new ArrayList<>();
 		Housing housing = housingRepo.getById(id);
@@ -84,5 +83,24 @@ public class HousingService {
 		
 		return house;
 	}
+	
+//	private Housing gettingCoordinates(Address addr) {
+//		
+//		String url = "https://api.opencagedata.com/geocode/v1/json?q=";
+//		String queryAddr = UrlEncoding.encodeValue(
+//				addr.getStreetAddress() + ", " +
+//				addr.getCity() + ", " +
+//				addr.getState() + ", United States");
+//		url += queryAddr;
+//		
+//		// Fetch API
+//		RestTemplate restTemplate = new RestTemplate();
+//		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+//		
+//		// Map JSON with Jackson
+////		ObjectMapper mapper = new ObjectMapper();
+////		JsonNode body = mapper.readTree(response.getBody()).findValue("results").get(0).findValue("geometry");
+////		
+//	}
 	
 }

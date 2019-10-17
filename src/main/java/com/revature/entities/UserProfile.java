@@ -5,6 +5,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="USER_PROFILE")
@@ -23,12 +26,14 @@ public class UserProfile {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
-	@Column(name="DESCRIPTION")
+	
+	@Column(name="DESCRIPTION", length = 400)
 	private String description;
 	
-	@OneToOne(cascade= {CascadeType.ALL})
-	@JoinColumn
-	private User user;
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="TRAINING_TYPE_FK")
@@ -38,15 +43,18 @@ public class UserProfile {
 	
 	public UserProfile() {
 		super();
+		
+	}
+
+	public UserProfile(int id) {
+		super();
+		this.id = id;
 	}
 	
-	
-	
-	public UserProfile(String description, User user, TrainingType trainingType) {
+	public UserProfile(String description) {
 		super();
 		this.description = description;
-		this.user = user;
-		this.trainingType = trainingType;
+		
 	}
 
 
@@ -55,10 +63,9 @@ public class UserProfile {
 		super();
 		this.id = id;
 		this.description = description;
-		this.user = user;
+		//this.user = user;
 		this.trainingType = trainingType;
 	}
-
 
 
 	public int getId() {
@@ -106,16 +113,10 @@ public class UserProfile {
 	public void setTrainingType(TrainingType trainingType) {
 		this.trainingType = trainingType;
 	}
-
-
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, trainingType, user);
+		return Objects.hash(description, id, trainingType);
 	}
-
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -124,18 +125,18 @@ public class UserProfile {
 			return false;
 		UserProfile other = (UserProfile) obj;
 		return Objects.equals(description, other.description) && id == other.id
-				&& Objects.equals(trainingType, other.trainingType) && Objects.equals(user, other.user);
+				&& Objects.equals(trainingType, other.trainingType);
 	}
-
-
-
 	@Override
 	public String toString() {
-		return "UserProfile [id=" + id + ", description=" + description + ", user=" + user + ", trainingType="
-				+ trainingType + "]";
+		return "UserProfile [id=" + id + ", description=" + description + ", trainingType=" + trainingType + "]";
 	}
+
 
 
 	
+
+
+
 	
 }

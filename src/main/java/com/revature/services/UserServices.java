@@ -2,6 +2,7 @@ package com.revature.services;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -9,10 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.dtos.Credentials;
 import com.revature.entities.Role;
+import com.revature.entities.TrainingType;
 import com.revature.entities.User;
 import com.revature.entities.UserProfile;
 import com.revature.exceptions.BadRequestException;
+import com.revature.exceptions.ResourceCreationException;
 import com.revature.exceptions.ResourceNotFoundException;
+import com.revature.exceptions.SecurityExceptions;
+import com.revature.exceptions.Unauthorized;
 import com.revature.repos.UserProfileRepository;
 import com.revature.repos.UserRepository;
 
@@ -20,11 +25,13 @@ import com.revature.repos.UserRepository;
 public class UserServices {
 
 	private UserRepository userRepo;
-	private UserProfileRepository userProRepo;
+	private ProfileService profileService;
+	
 
 	@Autowired
-	public UserServices(UserRepository repo) {
+	public UserServices(UserRepository repo, ProfileService profs) {
 		this.userRepo = repo;
+		this.profileService = profs;
 	}
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
@@ -45,6 +52,7 @@ public class UserServices {
 
 		if (email == null || email.equals("")) {
 			System.out.println("non-value provided for username!");
+			
 			return null;
 		}
 
@@ -78,7 +86,7 @@ public class UserServices {
 		User retrievedUser = userRepo.getUserByCredentials(creds.getEmail(), creds.getPassword());
 		
 		if(retrievedUser == null) {
-			throw new SecurityException("No user found with provided credentials");
+			throw new SecurityExceptions("No user found with provided credentials");
 		}
 		
 		return retrievedUser;
@@ -102,20 +110,31 @@ public class UserServices {
 		
 		if(!usernameAvailable && !emailAvailable ) {
 			System.out.println("Provided username/email is already taken - user not created");
-			return null;
+			throw new ResourceCreationException("Provided username/email is already taken - user not created");
+			
 		}
 		
 		System.out.println("Setting role of new users to \"USER\"");
 		newUser.setRole(new Role("USER"));
-		//newUser.setProfile(new UserProfile(6));
 		
-		
-		userRepo.save(newUser);
 		System.out.println(newUser);
-		//profile.setUser(newUser.getId());
-		UserProfile profile = new UserProfile(newUser);
+		
+		UserProfile profile = new UserProfile();
+		
+		//set parent and child reference
+		newUser.setProfile(profile);
+		System.out.println("Setting role of new users to \"USER\"");
+		profile.setDescription("Welcome to Revtaroom");
+		profile.setTrainingType(new TrainingType("OTHER"));
+		profile.setUser(newUser);
+	
+		
 		System.out.println(profile);
-		System.out.println(profile.getUser().getId());
+		
+		System.out.println(profile);
+		profileService.newProfile(profile);
+	    userRepo.save(newUser);
+		
 		return newUser;
 	}
 	

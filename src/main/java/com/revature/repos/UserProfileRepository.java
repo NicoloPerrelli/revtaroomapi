@@ -42,10 +42,10 @@ public class UserProfileRepository implements CrudRepository<UserProfile>{
 		Session session = factory.getCurrentSession();
 		UserProfile userProfileInDb = session.get(UserProfile.class, updatedObj.getId());
 		
-		if(userProfileInDb == null) return false;
+		//if(userProfileInDb == null) return false;
 		
 		userProfileInDb.setDescription(updatedObj.getDescription());
-		userProfileInDb.setUser(updatedObj.getUser());
+		//userProfileInDb.setUser(updatedObj.getUser());
 		userProfileInDb.setTrainingType(updatedObj.getTrainingType());
 		
 		return true;

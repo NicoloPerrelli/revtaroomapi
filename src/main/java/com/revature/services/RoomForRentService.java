@@ -40,8 +40,10 @@ public class RoomForRentService {
 		rent.setHouse(housing);
 		System.out.println(rent);
 		rent.setPricePerMonth(housing.getPricePerMonth());
-		//Set the availablity status to yes 
+		
+		System.out.println("Set the availablity status to yes");
 		rent.setStatus(new RoomAvailabiltyStatus("YES"));
+		System.out.println(rent);
 		
 		return roomRepo.save(rent);
 	}

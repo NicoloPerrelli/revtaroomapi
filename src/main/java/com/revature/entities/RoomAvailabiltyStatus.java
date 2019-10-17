@@ -12,12 +12,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="ROOM_AVAILABILTY_STATUS")
-@SequenceGenerator(name="role_pk_gen", sequenceName="status_seq", allocationSize=1)
+@SequenceGenerator(name="status_pk", sequenceName="status_seq", allocationSize=1)
 public class RoomAvailabiltyStatus {
 
 	@Id
 	@Column(name="STATUS_ID")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
 	@Column(name="STATUS")

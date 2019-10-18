@@ -67,6 +67,7 @@ public class RoomForRentService {
 		return roomRepo.getRoomByUserId(id);
 	}
 	
+	@Transactional
 	public List<RoomForRent> getAllAvailableRoom(){
 		log.info("roomRepo.getAllAvailableRoom invocked!");
 		

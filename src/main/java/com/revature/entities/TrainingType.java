@@ -19,10 +19,10 @@ public class TrainingType {
 	@Id
 	@Column(name="TRAINING_ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private int id;
+	private int trainingId;
 	
 	@Column(name="TRAINING_TYPE")
-	private String name;
+	private String trainingType;
 	
 	
 	public TrainingType() {
@@ -31,62 +31,86 @@ public class TrainingType {
 	
 
 	public TrainingType(int id) {
-		this.id = id;
+		this.trainingId = id;
 		
 		switch(id) {
 		case 1:
-			name = "JAVA";
+			this.trainingType = "JAVA";
 			break;
 		case 2:
-			name = "ANGULAR";
+			this.trainingType = "DEVOPS";
 			break;
 		case 3:
-			name = "C#";
+			this.trainingType = "C#";
 			break;
 		default:
-			name = "OTHER";
+			this.trainingType = "ANGULAR";
 		}
 	}
 
 	public TrainingType(String name) {
-		this.name = name;
+		this.trainingType = name;
 		
 		switch(name.toUpperCase()) {
 		case "JAVA":
-			id = 1;
+			this.trainingId = 1;
 			break;
-		case "ANGULAR":
-			id = 2;
+		case "DEVOPS":
+			this.trainingId = 2;
 			break;
 		case "C#":
-			id = 3;
+			this.trainingId = 3;
+			break;
+		case "ANGULAR":
+			this.trainingId = 4;
+			break;
+		case "1":
+			this.trainingType="JAVA";
+			this.trainingId = 1;
+			break;
+		case "2":
+			this.trainingType="DEVOPS";
+			this.trainingId = 2;
+			break;
+		case "3":
+			this.trainingType="C#";
+			this.trainingId = 3;
+			break;
+		case "4":
+			this.trainingType="ANGULAR";
+			this.trainingId = 4;
 			break;
 		default:
-			id = 4;
+			this.trainingType="ANGULAR";
+			this.trainingId = 4;
 		}
 	}
 	
 
 	public int getId() {
-		return id;
+		return trainingId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.trainingId = id;
 	}
 
 	public String getName() {
-		return name;
+		return trainingType;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.trainingType = name;
 	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + trainingId;
+		result = prime * result + ((trainingType == null) ? 0 : trainingType.hashCode());
+		return result;
 	}
 
 
@@ -94,16 +118,25 @@ public class TrainingType {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof TrainingType))
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
 			return false;
 		TrainingType other = (TrainingType) obj;
-		return id == other.id && Objects.equals(name, other.name);
+		if (trainingId != other.trainingId)
+			return false;
+		if (trainingType == null) {
+			if (other.trainingType != null)
+				return false;
+		} else if (!trainingType.equals(other.trainingType))
+			return false;
+		return true;
 	}
 
 
 	@Override
 	public String toString() {
-		return "TrainingType [id=" + id + ", name=" + name + "]";
+		return "TrainingType [trainingId=" + trainingId + ", trainingType=" + trainingType + "]";
 	}
 	
 	

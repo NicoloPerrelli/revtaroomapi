@@ -13,23 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProfileService {
 	
 	private UserProfileRepository profileRepo;
-	private UserRepository userRepo;
-
+	
 	@Autowired
-	public ProfileService(UserProfileRepository repo, UserRepository userRepo) {
+	public ProfileService(UserProfileRepository repo) {
 		this.profileRepo = repo;
-		this.userRepo = userRepo;
 	}
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public UserProfile getById(int id) {
 		return profileRepo.getById(id);
 	}
-
-	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-	public boolean updateProfile(int id, UserProfile upadatedProfile) {
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
+	public boolean updateProfile(int id, UserProfile upadatedProfile, int type) {
 		System.out.println("ProfileService.updateProfile Invoked!");
-		return profileRepo.updateWithId(id, upadatedProfile);
+		return profileRepo.updateWithId(id, upadatedProfile, type);
 	}
 	
 	@Transactional

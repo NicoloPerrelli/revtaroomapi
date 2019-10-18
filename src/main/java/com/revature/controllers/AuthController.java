@@ -34,24 +34,18 @@ public class AuthController {
 	
 	@PostMapping(produces="application/json", consumes="application/json")
 	public Principal authenticate(@RequestBody @Valid Credentials creds, HttpServletResponse resp) {
-		
 		Principal payload = userService.login(creds).extractPrincipal();
 		resp.setHeader(JwtConfig.HEADER, JwtConfig.PREFIX + JwtGenerator.createJwt(payload));
 		return payload;
-		
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleSecurityException(SecurityExceptions se) {
-        
         String exMessage = se.getMessage();
         ErrorResponse err = new ErrorResponse();
         err.setMessage(exMessage);
         err.setTimestamp(System.currentTimeMillis());
-        
-        
-       
         return err;
     }
 	

@@ -51,11 +51,15 @@ public class HousingService {
 		// to do
 		
 		// Validation of PricePerMonth
-		if(bh.getPricePerMonth() < 100 || bh.getPricePerMonth() > 7000) throw new BadRequestException("Invalid price");
+		//if(bh.getPricePerMonth() < 100 || bh.getPricePerMonth() > 7000) throw new BadRequestException("Invalid price");
 		
 		
 		System.out.println("Get user by id");
+		System.out.println("Brokenhouse" + bh);
+		System.out.println("bhId" + bh.getUserId());
 		User user = userRepo.getById(bh.getUserId());
+		System.out.println("User: " + user);
+		System.out.println("BrokenHouse: " + bh.getUserId());
 		
 		if(user == null) throw new BadRequestException("Null user");
 		

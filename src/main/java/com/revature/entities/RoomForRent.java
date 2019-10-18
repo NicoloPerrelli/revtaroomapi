@@ -7,9 +7,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+@NamedQueries({
+	@NamedQuery(name="getAllAviableRooms", query="from RoomForRent r,Housing h, Address a where r.id = 1 and r.house = h.id and h.address = a.housing"),
+	@NamedQuery(name="getByUserId", query="from Housing h, RoomForRent r where h.user = :id and h.id = r.house")
+})
 
 @Entity
 @Table(name="ROOM_FOR_RENT")
@@ -22,6 +29,10 @@ public class RoomForRent {
 	
 	@Column(name="PRICE_PER_MONTH")
 	private double pricePerMonth;
+	
+	@OneToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "STATUS_FK")
+	private RoomAvailabiltyStatus status;
 	
 	@OneToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="HOUSING_FK")
@@ -38,9 +49,11 @@ public class RoomForRent {
 		this.house = house;
 	}
 
-	public RoomForRent(double pricePerMonth, Housing house) {
+	public RoomForRent(int id, double pricePerMonth, RoomAvailabiltyStatus status, Housing house) {
 		super();
+		this.id = id;
 		this.pricePerMonth = pricePerMonth;
+		this.status = status;
 		this.house = house;
 	}
 
@@ -60,6 +73,14 @@ public class RoomForRent {
 		this.pricePerMonth = pricePerMonth;
 	}
 
+	public RoomAvailabiltyStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RoomAvailabiltyStatus status) {
+		this.status = status;
+	}
+
 	public Housing getHouse() {
 		return house;
 	}
@@ -70,7 +91,7 @@ public class RoomForRent {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(house, id, pricePerMonth);
+		return Objects.hash(house, id, pricePerMonth, status);
 	}
 
 	@Override
@@ -81,14 +102,15 @@ public class RoomForRent {
 			return false;
 		RoomForRent other = (RoomForRent) obj;
 		return Objects.equals(house, other.house) && id == other.id
-				&& Double.doubleToLongBits(pricePerMonth) == Double.doubleToLongBits(other.pricePerMonth);
+				&& Double.doubleToLongBits(pricePerMonth) == Double.doubleToLongBits(other.pricePerMonth)
+				&& Objects.equals(status, other.status);
 	}
 
 	@Override
 	public String toString() {
-		return "RoomForRent [id=" + id + ", pricePerMonth=" + pricePerMonth + ", house=" + house + "]";
+		return "RoomForRent [id=" + id + ", pricePerMonth=" + pricePerMonth + ", status=" + status + ", house=" + house
+				+ "]";
 	}
-	
-	
+
 	
 }

@@ -67,7 +67,7 @@ public class UserServices {
 		} 
 		User tempId = userRepo.getById(id);
 		if(id != tempId.getId()) {
-			throw new ResourceNotFoundException("No card found with provided id");
+			throw new ResourceNotFoundException("No user found with provided id");
 		}
 		return tempId;
 	}

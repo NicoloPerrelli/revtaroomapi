@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @NamedQueries({
 	@NamedQuery(name="getAllAviableRooms", query="from RoomForRent r where r.status = 1"),
-	@NamedQuery(name="getByUserId", query="from Housing h, RoomForRent r where h.user = :id and h.id = r.house")
+	@NamedQuery(name="getByUserId", query="from RoomForRent r where r.status = 1 and house.user.id = :id")
 })
 
 @Entity

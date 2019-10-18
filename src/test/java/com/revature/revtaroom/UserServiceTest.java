@@ -1,118 +1,117 @@
-//package com.revature.revtaroom;
-//
-//import static org.hamcrest.CoreMatchers.is;
-//import static org.mockito.Mockito.atLeastOnce;
-//import static org.mockito.Mockito.doNothing;
-//import static org.mockito.Mockito.times;
-//import static org.mockito.Mockito.verify;
-//import static org.mockito.Mockito.verifyNoMoreInteractions;
-//import static org.mockito.Mockito.when;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//
-//
-//
-//import java.util.Arrays;
-//import java.util.List;
-//
-//import org.junit.After;
-//import org.junit.Before;
-//import org.junit.Test;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.MockitoAnnotations;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-//import static org.hamcrest.Matchers.*;
-//import static org.junit.Assert.assertEquals;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.revature.controllers.UserController;
-//import com.revature.dtos.Credentials;
-//import com.revature.entities.Role;
-//import com.revature.entities.User;
-//import com.revature.filters.AuthFilter;
-//import com.revature.services.UserServices;
-//
-//
-//public class UserServiceTest {
-//	
-//	private MockMvc mockMvc;
-//
-//    @InjectMocks
-//    private UserServices userService;
-//
-//
-//    @Before
-//    public void init(){
-//        MockitoAnnotations.initMocks(this);
-//        mockMvc = MockMvcBuilders
-//                .standaloneSetup(userService)
-//                .build();
-//    }
-//	
-//	
-//	@After
-//	public void reset() {
-//		userService.userDao = null;
-//	}
-//	
-//	@Test
-//	public void RegisterTest() {
-//		
-//		Role role = new Role("USER");
-//		User user = new User("username", "password", "firstName", "lastName", "email", role);
-//		user.setId(0);
-//		when(userService.userDao.add(user)).thenReturn(new User("username", "password", "firstName", "lastName", "email", role));
-//		when(userService.login("username", "password")).thenReturn(user);
-//		assertEquals(user, userService.register(user));
-//		
-//		
-//	}
-//	
-//	@Test
-//	public void loginTest() {
-//		
-//		when(userService.userDao.getUserByCredentials("username", "password")).thenReturn(null);
-//		assertEquals(null, userService.login("username", "password"));
-//		
-//	}
-//	
-//	
-//	@Test
-//	public void getAllUserTest() {
-//		
-//		
-//		when(userService.userDao.getAll()).thenReturn(null);
-//		assertEquals(null, userService.getAllUsers());
-//		
-//	}
-//	
-//	@Test
-//	public void getByUsernameTest() {
-//		
-//		User user = new User("username");
-//		when(userService.userDao.getUserByUsername("username")).thenReturn(user);
-//		assertEquals(user, userService.getUserByUsername("username"));
-//	}
-//	
-//	@Test
-//	public void updateUserTest() {
-//		
-//		Role role = new Role("USER");
-//		User user = new User(1,"username", "password", "firstName", "lastName", "email",role);
-//		when(userService.userDao.update(user)).thenReturn(user);
-//		assertEquals(user, userService.updateUser(user));
-//		
-//	}
-//	
-//
-//   
-//}
+package com.revature.revtaroom;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.revature.entities.User;
+import com.revature.entities.UserProfile;
+import com.revature.services.ProfileService;
+import com.revature.services.UserServices;
+import com.revature.repos.UserRepository;
+
+public class UserServiceTest {
+	
+	
+	@InjectMocks
+	UserServices userService;
+	
+	@Mock
+	ProfileService pf;
+	
+	@Mock
+	UserRepository repo;
+	
+	@Before
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+	}
+	
+	@Test
+	public void getAllUserTest_Success() {
+		
+		List<User> listOfUser = new ArrayList<User>();
+		User user1 = new User("username", "password", "firstName", "lastName", "email");
+		User user2 = new User("username1", "password1", "firstName1", "lastName1", "email1");
+		User user3 = new User("username3", "password3", "firstName3", "lastName3", "email3");
+		
+		listOfUser.add(user1);
+		listOfUser.add(user2);
+		listOfUser.add(user3);
+		
+		when(repo.getAll()).thenReturn(listOfUser);
+		
+		List<User> list = userService.getAll();
+		
+		assertEquals(3, list.size());
+		verify(repo, times(1)).getAll();
+	}
+	
+	@Test
+	public void getUserByIdTest_Success() {
+		
+		when(repo.getById(1)).thenReturn(new User(1, "username3", "password3", "firstName3", "lastName3", "email3"));
+		
+		User user = userService.getUserById(1);
+		
+		assertEquals(1, user.getId());
+	}
+
+	@Test
+	public void createUserTest_Success() {
+		
+		UserProfile profile = new UserProfile();
+		User user = new User(1,"username", "password", "firstName", "lastName", "email");
+		user.setProfile(profile);
+		profile.setUser(user);
+		
+		userService.register(user);
+		
+		verify(repo, times(1)).save(user);
+	}
+	
+
+	@Test
+	public void getEmailTest() {
+		
+		when(repo.getByEmail("email")).thenReturn(new User("email"));
+		
+		User user = userService.getByEmail("email");
+		
+		assertEquals("email", user.getEmail());
+		
+	}
+	
+	@Test
+	public void updateUserTest() {
+		
+		User user = new User(1,"username", "password", "firstName", "lastName", "email");
+		when(repo.update(user)).thenReturn(true);
+		
+		assertEquals(true, userService.updateUser(user));
+		
+	}
+	
+	@Test
+	public void updateUserTest_Fail() {
+		
+		User user = new User(1,"username", "password", "firstName", "lastName", "email");
+		when(repo.update(user)).thenReturn(false);
+		
+		assertEquals(false, userService.updateUser(user));
+		
+	}
+	
+
+   
+}

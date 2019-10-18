@@ -16,7 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @NamedQueries({
-	@NamedQuery(name="getAllAviableRooms", query="from RoomForRent r,Housing h, Address a where r.id = 1 and r.house = h.id and h.address = a.housing"),
+	@NamedQuery(name="getAllAviableRooms", query="from RoomForRent r where r.status = 1"),
 	@NamedQuery(name="getByUserId", query="from Housing h, RoomForRent r where h.user = :id and h.id = r.house")
 })
 

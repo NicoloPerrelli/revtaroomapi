@@ -67,6 +67,8 @@ public class AuthFilter extends OncePerRequestFilter {
     					.parseClaimsJws(token)
     					.getBody();
     			
+    			System.out.println("claims " + claims);
+    			
     			Principal principal = new Principal();
     			principal.setId(Integer.parseInt(claims.getId()));
     			principal.setEmail(claims.getSubject());
@@ -97,6 +99,4 @@ public class AuthFilter extends OncePerRequestFilter {
     		resp.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization");
     		resp.setHeader("Access-Control-Expose-Headers", "Authorization");
     }
-
 }
-

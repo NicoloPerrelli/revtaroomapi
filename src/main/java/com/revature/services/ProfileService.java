@@ -2,15 +2,17 @@ package com.revature.services;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import com.revature.entities.UserProfile;
+import com.revature.repos.UserProfileRepository;
+import com.revature.repos.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.entities.UserProfile;
-import com.revature.exceptions.ResourceCreationException;
-import com.revature.filters.AuthFilter;
-import com.revature.repos.UserProfileRepository;
+
+
 
 
 @Service
@@ -28,21 +30,19 @@ public class ProfileService {
 	public UserProfile getById(int id) {
 		return profileRepo.getById(id);
 	}
-	
-	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-	public boolean updateProfile(UserProfile upadatedProfile) {
-		log.info("ProfileService.updateProfile Invoked!");
 
-		return profileRepo.update(upadatedProfile);
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+	public boolean updateProfile(int id, UserProfile upadatedProfile) {
+		System.out.println("ProfileService.updateProfile Invoked!");
+		return profileRepo.updateWithId(id, upadatedProfile);
 	}
 	
 	@Transactional
 	public UserProfile newProfile(UserProfile newProfile) {
 		log.info("ProfileService.save Invoked!");
 		profileRepo.save(newProfile);
-	
 		return newProfile;
 	}
-	
+
 	
 }

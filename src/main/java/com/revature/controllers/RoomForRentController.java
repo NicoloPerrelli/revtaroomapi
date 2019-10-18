@@ -42,22 +42,20 @@ public class RoomForRentController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public RoomForRent addRoom(@RequestBody BrokenHousing bh, HttpServletRequest req) {
 
-		System.out.println("Brokenhouse" + bh);
 		Principal principal = (Principal) req.getAttribute("principal");
 
 		if (principal == null || principal.getId() <= 0)
 			throw new BadRequestException("Unauthorized");
 	
-		System.out.println("After principal");
+		
 		bh.setUserId(principal.getId());
-		System.out.println("Principal Id: " + principal.getId());
-		System.out.println("Principal: " + principal.getEmail());
+		
 		return this.rfrService.roomForRent(bh);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<RoomForRent> getAllAvailableRooms() {
+	public List<RoomForRent> getAllAvailableRooms(HttpServletRequest req) {
 		
 		return rfrService.getAllAvailableRoom();
 	}

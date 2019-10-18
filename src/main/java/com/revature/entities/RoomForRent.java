@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -14,7 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @NamedQueries({
-	@NamedQuery(name="getAllAviableRooms", query="from RoomForRent r,Housing h, Address a where r.status = 1 and r.house = h.id and h.address = a.housing"),
+	@NamedQuery(name="getAllAviableRooms", query="from RoomForRent r where r.status = 1"),
 	@NamedQuery(name="getByUserId", query="from Housing h, RoomForRent r where h.user = :id and h.id = r.house")
 })
 
@@ -25,6 +27,7 @@ public class RoomForRent {
 	
 	@Id
 	@Column(name="ROOM_FOR_RENT_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
 	@Column(name="PRICE_PER_MONTH")
@@ -108,8 +111,8 @@ public class RoomForRent {
 
 	@Override
 	public String toString() {
-		return "RoomForRent [id=" + id + ", pricePerMonth=" + pricePerMonth + ", status=" + status + ", house=" + house
-				+ "]";
+		return "RoomForRent [id=" + id + ", pricePerMonth=" + pricePerMonth + ", status=" + status + 
+				 "]";
 	}
 
 	

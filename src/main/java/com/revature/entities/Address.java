@@ -13,6 +13,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="ADDRESS")
 @SequenceGenerator(name="id_pk", sequenceName="address_seq", allocationSize = 1)
@@ -49,6 +51,7 @@ public class Address {
 	@Column(name="LONGITUDE")
 	private String longitude;
 	
+	@JsonIgnore
 	@OneToOne(cascade= {CascadeType.ALL})
 	private Housing housing;
 
@@ -189,7 +192,7 @@ public class Address {
 	public String toString() {
 		return "Address [id=" + id + ", houseNumber=" + houseNumber + ", streetAddress=" + streetAddress + ", city="
 				+ city + ", state=" + state + ", zipCode=" + zipCode + ", latitude=" + latitude + ", longitude="
-				+ longitude + ", housing=" + housing + "]";
+				+ longitude + "]";
 	}
 
 	

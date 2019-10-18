@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.revature.entities.Housing;
 import com.revature.entities.RoomForRent;
 
 @Repository
@@ -23,7 +24,17 @@ public class RoomForRentRepository implements CrudRepository<RoomForRent>{
 	@Override
 	public List<RoomForRent> getAll() {
 		
-		return factory.getCurrentSession().createQuery("from RoomForRent", RoomForRent.class).getResultList();
+		return factory.getCurrentSession()
+				.createNamedQuery("getAllAviableRooms", RoomForRent.class)
+				.getResultList();
+	}
+	
+	public List<RoomForRent> getRoomByUserId(int userId) {
+		
+		return factory.getCurrentSession()
+				.createNamedQuery("getByUserId", RoomForRent.class)
+				.setParameter("id", userId)
+				.getResultList();
 	}
 
 	@Override

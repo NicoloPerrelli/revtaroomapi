@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,33 +14,41 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.dtos.Principal;
+import com.revature.entities.User;
 import com.revature.entities.UserProfile;
 import com.revature.exceptions.ErrorResponse;
 import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.services.ProfileService;
+import com.revature.services.UserServices;
 
 @RestController
 @RequestMapping("/profile")
 public class ProfileController {
 
+	private UserServices userServices;
 	private ProfileService profileService;
 
 	@Autowired
-	public ProfileController(ProfileService service) {
-		this.profileService = service;
+	public ProfileController(UserServices userServices, ProfileService profileService) {
+		this.userServices = userServices;
+		this.profileService = profileService;
 	}
 	
 
 	@GetMapping(produces="application/json")
-	public UserProfile getMyProfile(HttpServletRequest req){
+	public User getMyProfile(HttpServletRequest req){
+		System.out.println("in getMyProfile in profileController... " + req);
 		Principal principal = (Principal) req.getAttribute("principal");
-		return profileService.getById(principal.getId());
+		return userServices.getUserById(principal.getId());
 	}
 	
-
-	@PostMapping(produces="application/json", consumes="application/json")
-	public boolean updateProfile(@RequestHeader("principal") int id, @RequestBody UserProfile upadatedProfile){
-		return profileService.updateProfile(upadatedProfile);
+	@PutMapping(produces="application/json", consumes="application/json")
+	public boolean updateProfile(HttpServletRequest req, @RequestBody UserProfile upadatedProfile){
+		System.out.println("Before principal we have this - "+upadatedProfile);
+		Principal principal = (Principal) req.getAttribute("principal");
+		int proId = userServices.getUserById(principal.getId()).getProfile().getId();
+		System.out.println("the user id from jwt " + proId);
+		return profileService.updateProfile(proId,upadatedProfile);
 	}
 	
 	@ExceptionHandler

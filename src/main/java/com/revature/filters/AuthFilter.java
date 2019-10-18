@@ -29,6 +29,7 @@ public class AuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws ServletException, IOException {
 
+
     	//log.info("Request intercepted by TokenAuthFilter.doFilter");
     		extractPrincipal(req);
     		attachCorsResponseHeaders(resp);
@@ -62,9 +63,11 @@ public class AuthFilter extends OncePerRequestFilter {
     		try {
     			
     			Claims claims = Jwts.parser()
-    					.setSigningKey(JwtConfig.SIGNING_KEY)
+    					.setSigningKey(JwtConfig.SECRET.getBytes())
     					.parseClaimsJws(token)
     					.getBody();
+    			
+    			System.out.println("claims " + claims);
     			
     			Principal principal = new Principal();
     			principal.setId(Integer.parseInt(claims.getId()));
@@ -95,5 +98,5 @@ public class AuthFilter extends OncePerRequestFilter {
     		resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
     		resp.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization");
     		resp.setHeader("Access-Control-Expose-Headers", "Authorization");
-    	}
+    }
 }

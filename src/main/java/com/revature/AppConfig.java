@@ -44,6 +44,7 @@ public class AppConfig implements WebMvcConfigurer, WebApplicationInitializer {
 	
 	@Bean
 	public BasicDataSource dataSource() {
+		System.out.println("Username: " + dbUsername);
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(dbDriver);
 		dataSource.setUrl(dbUrl);
@@ -73,7 +74,8 @@ public class AppConfig implements WebMvcConfigurer, WebApplicationInitializer {
 		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
 		hibernateProperties.setProperty("hibernate.show_sql", "true");
 		hibernateProperties.setProperty("hibernate.format_sql", "true");
-	    hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+	    //hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+
 		return hibernateProperties;
 	}
 	

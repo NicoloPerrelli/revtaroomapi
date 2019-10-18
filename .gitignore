@@ -2,6 +2,7 @@
 .classpath
 .project
 .settings/
+.metadata/
  
 # Intellij
 .idea/
@@ -24,3 +25,4 @@ target/
 *.properties
 
 target/*
+

@@ -16,6 +16,7 @@ import com.revature.dtos.Credentials;
 import com.revature.dtos.Principal;
 import com.revature.exceptions.BadRequestException;
 import com.revature.exceptions.ErrorResponse;
+import com.revature.exceptions.SecurityExceptions;
 import com.revature.security.JwtConfig;
 import com.revature.security.JwtGenerator;
 import com.revature.services.UserServices;
@@ -42,13 +43,17 @@ public class AuthController {
 	
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
-	public ErrorResponse handleResourceNotFoundException(SecurityException rnfe) {
-		ErrorResponse err = new ErrorResponse();
-		err.setStatus(HttpStatus.UNAUTHORIZED.value());
-		err.setMessage(rnfe.getMessage());
-		err.setTimestamp(System.currentTimeMillis());
-		return err;
-	}
+    public ErrorResponse handleSecurityException(SecurityExceptions se) {
+        
+        String exMessage = se.getMessage();
+        ErrorResponse err = new ErrorResponse();
+        err.setMessage(exMessage);
+        err.setTimestamp(System.currentTimeMillis());
+        
+        
+       
+        return err;
+    }
 	
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

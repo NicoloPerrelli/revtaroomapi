@@ -106,7 +106,11 @@ public class TrainingType {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + trainingId;
+		result = prime * result + ((trainingType == null) ? 0 : trainingType.hashCode());
+		return result;
 	}
 
 
@@ -114,16 +118,25 @@ public class TrainingType {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof TrainingType))
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
 			return false;
 		TrainingType other = (TrainingType) obj;
-		return id == other.id && Objects.equals(name, other.name);
+		if (trainingId != other.trainingId)
+			return false;
+		if (trainingType == null) {
+			if (other.trainingType != null)
+				return false;
+		} else if (!trainingType.equals(other.trainingType))
+			return false;
+		return true;
 	}
 
 
 	@Override
 	public String toString() {
-		return "TrainingType [id=" + id + ", name=" + name + "]";
+		return "TrainingType [trainingId=" + trainingId + ", trainingType=" + trainingType + "]";
 	}
 	
 	

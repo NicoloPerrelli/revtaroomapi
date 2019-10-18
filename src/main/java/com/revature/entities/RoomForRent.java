@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @NamedQueries({
-	//@NamedQuery(name="getAllAviableRooms", query="from RoomForRent r where r.RoomAvilabiltyStatus = YES"),
+	@NamedQuery(name="getAllAviableRooms", query="from RoomForRent r,Housing h, Address a where r.id = 1 and r.house = h.id and h.address = a.housing"),
 	@NamedQuery(name="getByUserId", query="from Housing h, RoomForRent r where h.user = :id and h.id = r.house")
 })
 
@@ -29,12 +29,6 @@ public class RoomForRent {
 	
 	@Column(name="PRICE_PER_MONTH")
 	private double pricePerMonth;
-	
-//	@Column(name="NUMBER_OF_ROOMS")
-//	private String numOfRoom;
-//	
-//	@Column(name="AVAILABLE_ROOMS")
-//	private int availableRooms;
 	
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "STATUS_FK")

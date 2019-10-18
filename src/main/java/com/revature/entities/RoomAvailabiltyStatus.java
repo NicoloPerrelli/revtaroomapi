@@ -17,7 +17,7 @@ public class RoomAvailabiltyStatus {
 
 	@Id
 	@Column(name="STATUS_ID")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="status_pk")
 	private int id;
 	
 	@Column(name="STATUS")

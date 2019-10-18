@@ -24,10 +24,12 @@ public class RoomForRentRepository implements CrudRepository<RoomForRent>{
 	@Override
 	public List<RoomForRent> getAll() {
 		
-		return factory.getCurrentSession().createQuery("from RoomForRent", RoomForRent.class).getResultList();
+		return factory.getCurrentSession()
+				.createNamedQuery("getAllAviableRooms", RoomForRent.class)
+				.getResultList();
 	}
 	
-	public List<RoomForRent> getByUserId(int userId) {
+	public List<RoomForRent> getRoomByUserId(int userId) {
 		
 		return factory.getCurrentSession()
 				.createNamedQuery("getByUserId", RoomForRent.class)

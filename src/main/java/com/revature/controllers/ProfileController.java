@@ -2,6 +2,8 @@ package com.revature.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.dtos.Principal;
 import com.revature.entities.UserProfile;
 import com.revature.exceptions.ErrorResponse;
+import com.revature.exceptions.ResourceCreationException;
 import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.services.ProfileService;
 
@@ -23,6 +26,7 @@ import com.revature.services.ProfileService;
 @RequestMapping("/profile")
 public class ProfileController {
 
+	private static Logger log = LogManager.getLogger(ProfileController.class);
 	private ProfileService profileService;
 
 	@Autowired
@@ -33,7 +37,7 @@ public class ProfileController {
 
 	@GetMapping(produces="application/json")
 	public UserProfile getMyProfile(HttpServletRequest req){
-		System.out.println("in getMyProfile in profileController... " + req);
+		log.info("in getMyProfile in profileController... " + req);
 		Principal principal = (Principal) req.getAttribute("principal");
 		return profileService.getById(principal.getId());
 	}
@@ -49,6 +53,16 @@ public class ProfileController {
 	public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException rnfe) {
 		ErrorResponse err = new ErrorResponse();
 		err.setStatus(404);
+		err.setMessage(rnfe.getMessage());
+		err.setTimestamp(System.currentTimeMillis());
+		return err;
+	}
+	
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public ErrorResponse handleResourceNotFoundException(ResourceCreationException rnfe) {
+		ErrorResponse err = new ErrorResponse();
+		err.setStatus(409);
 		err.setMessage(rnfe.getMessage());
 		err.setTimestamp(System.currentTimeMillis());
 		return err;

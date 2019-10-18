@@ -2,7 +2,6 @@ package com.revature.services;
 
 import java.util.List;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -17,8 +16,6 @@ import com.revature.exceptions.BadRequestException;
 import com.revature.exceptions.ResourceCreationException;
 import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.exceptions.SecurityExceptions;
-import com.revature.exceptions.Unauthorized;
-import com.revature.repos.UserProfileRepository;
 import com.revature.repos.UserRepository;
 
 @Service
@@ -48,7 +45,7 @@ public class UserServices {
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getByEmail(String email) {
-		System.out.println("UserService.getByUsername Invoked!");
+		System.out.println("UserService.getByEmail Invoked!");
 
 		if (email == null || email.equals("")) {
 			System.out.println("non-value provided for username!");

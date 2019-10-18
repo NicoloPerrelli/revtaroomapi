@@ -12,12 +12,9 @@ import com.revature.dtos.BrokenHousing;
 import com.revature.entities.Housing;
 import com.revature.entities.RoomAvailabiltyStatus;
 import com.revature.entities.RoomForRent;
-import com.revature.entities.User;
 import com.revature.exceptions.BadRequestException;
 import com.revature.exceptions.ResourceCreationException;
 import com.revature.exceptions.ResourceNotFoundException;
-import com.revature.filters.AuthFilter;
-import com.revature.repos.HousingRepo;
 import com.revature.repos.RoomForRentRepository;
 
 @Service

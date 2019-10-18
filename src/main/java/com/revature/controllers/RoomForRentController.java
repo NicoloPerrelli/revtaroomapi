@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.dtos.BrokenHousing;
 import com.revature.dtos.Principal;
-import com.revature.entities.Housing;
 import com.revature.entities.RoomForRent;
-import com.revature.entities.User;
 import com.revature.exceptions.BadRequestException;
 import com.revature.exceptions.ErrorResponse;
 import com.revature.exceptions.ResourceNotFoundException;

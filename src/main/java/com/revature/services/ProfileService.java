@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProfileService {
 	
 	private UserProfileRepository profileRepo;
-	
+
 	@Autowired
 	public ProfileService(UserProfileRepository repo) {
 		this.profileRepo = repo;

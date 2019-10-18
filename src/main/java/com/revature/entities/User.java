@@ -31,8 +31,6 @@ import lombok.Setter;
 		@NamedQuery(name = "getUserByCredentials", query = "from User u where u.email = :un and u.password = :pw") })
 
 @Entity
-@Data
-@Getter @Setter @NoArgsConstructor @RequiredArgsConstructor
 @Table(name = "USERS")
 @SequenceGenerator(name = "id_pk", sequenceName = "user_seq", allocationSize = 1)
 public class User {

@@ -2,7 +2,6 @@ package com.revature.services;
 
 import java.util.List;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -17,8 +16,6 @@ import com.revature.exceptions.BadRequestException;
 import com.revature.exceptions.ResourceCreationException;
 import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.exceptions.SecurityExceptions;
-import com.revature.exceptions.Unauthorized;
-import com.revature.repos.UserProfileRepository;
 import com.revature.repos.UserRepository;
 
 @Service

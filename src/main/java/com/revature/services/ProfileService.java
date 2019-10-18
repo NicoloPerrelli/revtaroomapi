@@ -1,27 +1,22 @@
 package com.revature.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.entities.Role;
-import com.revature.entities.User;
 import com.revature.entities.UserProfile;
 import com.revature.repos.UserProfileRepository;
-import com.revature.repos.UserRepository;
+
 
 @Service
 public class ProfileService {
 
 	private UserProfileRepository profileRepo;
-	private UserRepository userRepo;
 
 	@Autowired
-	public ProfileService(UserProfileRepository repo, UserRepository userRepo) {
+	public ProfileService(UserProfileRepository repo) {
 		this.profileRepo = repo;
-		this.userRepo = userRepo;
 	}
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)

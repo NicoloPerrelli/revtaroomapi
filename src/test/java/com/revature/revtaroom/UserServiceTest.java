@@ -8,21 +8,12 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.revature.entities.Role;
 import com.revature.entities.User;
 import com.revature.entities.UserProfile;
 import com.revature.services.ProfileService;
@@ -98,17 +89,6 @@ public class UserServiceTest {
 		User user = userService.getByEmail("email");
 		
 		assertEquals("email", user.getEmail());
-		
-	}
-	
-	@Test
-	public void getByUsernameTest() {
-		
-		when(repo.getByUsername("username")).thenReturn(new User("username"));
-		
-		User user = userService.getByUsername("username");
-		
-		assertEquals("username", user.getUsername());
 		
 	}
 	

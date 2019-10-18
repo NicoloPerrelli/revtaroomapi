@@ -30,7 +30,7 @@ public class AuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws ServletException, IOException {
 
 
-    	//log.info("Request intercepted by TokenAuthFilter.doFilter");
+    	log.info("Request intercepted by TokenAuthFilter.doFilter");
     		extractPrincipal(req);
     		attachCorsResponseHeaders(resp);
     		chain.doFilter(req, resp);
@@ -50,11 +50,11 @@ public class AuthFilter extends OncePerRequestFilter {
     	 * @throws ServletException
     	 */
     	public void extractPrincipal(HttpServletRequest req) throws IOException, ServletException {
-    		//log.info("Attempting to extract principal object from JWT...");
+    		log.info("Attempting to extract principal object from JWT...");
     		String header = req.getHeader(JwtConfig.HEADER);
     		
     		if(header == null || !header.startsWith(JwtConfig.PREFIX)) {
-    			//log.info("No token found with required prefix");
+    			log.info("No token found with required prefix");
     			return;
     		}
     		
@@ -75,9 +75,9 @@ public class AuthFilter extends OncePerRequestFilter {
     			req.setAttribute("principal", principal);
     			
     		} catch (ExpiredJwtException eje) {
-    			//log.info("JWT expired. Reauthentication required.");
+    			log.info("JWT expired. Reauthentication required.");
     		} catch (Exception e) {
-    			//log.error("Error parsing JWT");
+    			log.error("Error parsing JWT");
     			e.printStackTrace();
     		}
     	}
@@ -91,7 +91,7 @@ public class AuthFilter extends OncePerRequestFilter {
     	 * @throws ServletException
     	 */
     	public void attachCorsResponseHeaders(HttpServletResponse resp) throws IOException, ServletException {
-    		//log.info("Attaching CORS headers to HTTP response");
+    		log.info("Attaching CORS headers to HTTP response");
     		resp.setHeader("Access-Control-Allow-Origin", "*");
     		resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
     		resp.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization");

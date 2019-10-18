@@ -1,3 +1,4 @@
+/*
 package com.revature.revtaroom;
 
 
@@ -78,3 +79,4 @@ public class AuthControllerTest {
 
 
 }
+*/

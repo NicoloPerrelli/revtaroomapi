@@ -50,8 +50,10 @@ public class RoomForRentService {
 		
 		log.info("Set the availablity status to yes");
 		rent.setStatus(new RoomAvailabiltyStatus("YES"));
+		roomRepo.save(rent);
 		
-		return roomRepo.save(rent);
+		System.out.println(rent);
+		return rent;
 	}
 	
 	public List<RoomForRent> getRoomByUserId(int id) {

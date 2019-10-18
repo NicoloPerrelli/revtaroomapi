@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -25,6 +27,7 @@ public class RoomForRent {
 	
 	@Id
 	@Column(name="ROOM_FOR_RENT_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_pk")
 	private int id;
 	
 	@Column(name="PRICE_PER_MONTH")
@@ -108,8 +111,8 @@ public class RoomForRent {
 
 	@Override
 	public String toString() {
-		return "RoomForRent [id=" + id + ", pricePerMonth=" + pricePerMonth + ", status=" + status + ", house=" + house
-				+ "]";
+		return "RoomForRent [id=" + id + ", pricePerMonth=" + pricePerMonth + ", status=" + status + 
+				 "]";
 	}
 
 	

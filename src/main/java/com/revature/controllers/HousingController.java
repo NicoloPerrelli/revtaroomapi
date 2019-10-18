@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +29,8 @@ import com.revature.util.GenericValidation;
 @RestController
 @RequestMapping("/housing")
 public class HousingController {
+	
+	private static Logger log = LogManager.getLogger(HousingController.class);
 	
 	private HousingService housingService;
 	
@@ -53,14 +57,14 @@ public class HousingController {
 	
 	@PostMapping(produces="application/json")
 	public Housing postHouses(@RequestBody BrokenHousing bh, HttpServletRequest req) {
-		System.out.println("In postHouses controller...");
-		System.out.println("Brokenhouse" + bh);
+		log.info("In postHouses controller...");
+		
 		Principal principal = (Principal) req.getAttribute("principal");
 		
 		if(principal == null || principal.getId() == 0) throw new BadRequestException("Unauthorized");
-		System.out.println("After principal");
+		
 		bh.setUserId(principal.getId());
-		System.out.println("Principal: " + principal.getEmail());
+		
 		
 		return this.housingService.addHousing(bh);
 	}

@@ -3,6 +3,8 @@ package com.revature.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,12 +14,15 @@ import com.revature.entities.Address;
 import com.revature.entities.Housing;
 import com.revature.entities.User;
 import com.revature.exceptions.BadRequestException;
+import com.revature.filters.AuthFilter;
 import com.revature.repos.AddressRepository;
 import com.revature.repos.HousingRepo;
 import com.revature.repos.UserRepository;
 
 @Service
 public class HousingService {
+	
+	private static Logger log = LogManager.getLogger(HousingService.class); 
 	
 	private HousingRepo housingRepo;
 	private AddressRepository addrRepo;
@@ -45,25 +50,19 @@ public class HousingService {
 	
 	@Transactional()
 	public Housing addHousing(BrokenHousing bh) {
-		System.out.println("In service addHousing...");
-		
-		// Validation of Address
-		// to do
-		
-		// Validation of PricePerMonth
-		//if(bh.getPricePerMonth() < 100 || bh.getPricePerMonth() > 7000) throw new BadRequestException("Invalid price");
+		log.info("In service addHousing...");
 		
 		
-		System.out.println("Get user by id");
-		System.out.println("Brokenhouse" + bh);
-		System.out.println("bhId" + bh.getUserId());
+		log.info("Validation of PricePerMonth");
+		if(bh.getPricePerMonth() < 100 || bh.getPricePerMonth() > 7000) throw new BadRequestException("Invalid price");
+		
+		
+		
 		User user = userRepo.getById(bh.getUserId());
-		System.out.println("User: " + user);
-		System.out.println("BrokenHouse: " + bh.getUserId());
 		
 		if(user == null) throw new BadRequestException("Null user");
 		
-		System.out.println("Add address...");
+		log.info("Add address...");
 		Address addr = addrRepo.save(bh.getAddress());
 		
 		if(addr == null) throw new BadRequestException("Null address");
@@ -87,24 +86,5 @@ public class HousingService {
 		
 		return house;
 	}
-	
-//	private Housing gettingCoordinates(Address addr) {
-//		
-//		String url = "https://api.opencagedata.com/geocode/v1/json?q=";
-//		String queryAddr = UrlEncoding.encodeValue(
-//				addr.getStreetAddress() + ", " +
-//				addr.getCity() + ", " +
-//				addr.getState() + ", United States");
-//		url += queryAddr;
-//		
-//		// Fetch API
-//		RestTemplate restTemplate = new RestTemplate();
-//		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-//		
-//		// Map JSON with Jackson
-////		ObjectMapper mapper = new ObjectMapper();
-////		JsonNode body = mapper.readTree(response.getBody()).findValue("results").get(0).findValue("geometry");
-////		
-//	}
 	
 }

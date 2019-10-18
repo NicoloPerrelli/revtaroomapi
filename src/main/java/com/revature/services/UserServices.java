@@ -2,6 +2,8 @@ package com.revature.services;
 
 import java.util.List;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,6 +23,8 @@ import com.revature.repos.UserRepository;
 @Service
 public class UserServices {
 
+	private static Logger log = LogManager.getLogger(UserServices.class);
+	
 	private UserRepository userRepo;
 	private ProfileService profileService;
 	
@@ -33,10 +37,10 @@ public class UserServices {
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getByUsername(String username) {
-		System.out.println("UserService.getByUsername Invoked!");
+		log.info("UserService.getByUsername Invoked!");
 
 		if (username == null || username.equals("")) {
-			System.out.println("non-value provided for username!");
+			log.info("non-value provided for username!");
 			return null;
 		}
 
@@ -45,10 +49,10 @@ public class UserServices {
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getByEmail(String email) {
-		System.out.println("UserService.getByEmail Invoked!");
+		log.info("UserService.getByEmail Invoked!");
 
 		if (email == null || email.equals("")) {
-			System.out.println("non-value provided for username!");
+			log.info("non-value provided for username!");
 			
 			return null;
 		}
@@ -58,6 +62,7 @@ public class UserServices {
 	
 	@Transactional(readOnly=true)
 	public User getUserById(int id) {
+		log.info("UserService.getByIdInvoked!");
 		
 		if(id <= 0) {
 			throw new BadRequestException("Invalid id provided");
@@ -72,7 +77,7 @@ public class UserServices {
 
 	@Transactional(readOnly = true)
 	public User login(Credentials creds) {
-		System.out.println("UserService.login Invoked!");
+		log.info("UserService.login Invoked!");
 
 		if(creds == null || creds.getEmail() == null || creds.getPassword() == null
 				|| creds.getEmail().equals("") || creds.getPassword().equals(""))
@@ -92,13 +97,13 @@ public class UserServices {
 
 	@Transactional
 	public User register(User newUser) {
-		System.out.println("UserService.register Invoked!");
+		log.info("UserService.register Invoked!");
 		
 		String username = newUser.getUsername();
 		String email = newUser.getEmail();
 		
 		if (!validateUserFields(newUser)) {
-			System.out.println("Invalid fields found on user object");
+			log.info("Invalid fields found on user object");
 			return null;
 		}
 		
@@ -106,29 +111,28 @@ public class UserServices {
 		boolean emailAvailable = userRepo.getByEmail(email) == null;
 		
 		if(!usernameAvailable && !emailAvailable ) {
-			System.out.println("Provided username/email is already taken - user not created");
+			log.info("Provided username/email is already taken - user not created");
 			throw new ResourceCreationException("Provided username/email is already taken - user not created");
 			
 		}
 		
-		System.out.println("Setting role of new users to \"USER\"");
+		log.info("Setting role of new users to \"USER\"");
 		newUser.setRole(new Role("USER"));
 		
 		System.out.println(newUser);
 		
 		UserProfile profile = new UserProfile();
 		
-		//set parent and child reference
+		log.info("set parent and child reference");
 		newUser.setProfile(profile);
-		System.out.println("Setting role of new users to \"USER\"");
+		
+		log.info("Setting default description to new profile");
 		profile.setDescription("Welcome to Revtaroom");
+		
+		log.info("Setting default training type to new profile");
 		profile.setTrainingType(new TrainingType("OTHER"));
 		profile.setUser(newUser);
 	
-		
-		System.out.println(profile);
-		
-		System.out.println(profile);
 		profileService.newProfile(profile);
 	    userRepo.save(newUser);
 		
@@ -137,10 +141,10 @@ public class UserServices {
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public boolean updateUser(User updatedUser) {
-		System.out.println("UserService.updateUser Invoked!");
+		log.info("UserService.updateUser Invoked!");
 		
 		if(!validateUserFields(updatedUser)) {
-			System.out.println("Invalid fields found on object!");
+			log.info("Invalid fields found on object!");
 			return false;
 		}
 		
@@ -149,11 +153,12 @@ public class UserServices {
 
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public List<User> getAll() {
+		log.info("UserService.getAll Invoked!");
 		return userRepo.getAll();
 	}
 	
 	private boolean validateUserFields(User user) {
-		System.out.println("Validating User fields...");
+		log.info("Validating User fields...");
 		
 		if(user.getUsername().trim().equals("") || user.getUsername() == null) return false;
 		if(user.getPassword().trim().equals("") || user.getPassword() == null) return false;

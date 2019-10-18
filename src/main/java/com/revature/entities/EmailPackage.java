@@ -4,17 +4,27 @@ public class EmailPackage {
 
 	private String username;
 	private String email;
+	private String to;
 	private String emailText;
 
 	public EmailPackage() {
 		super();
 	}
 
-	public EmailPackage(String username, String email, String emailText) {
+	public EmailPackage(String username, String email, String to, String emailText) {
 		super();
 		this.username = username;
 		this.email = email;
+		this.to = to;
 		this.emailText = emailText;
+	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
 	}
 
 	public String getUsername() {
@@ -47,6 +57,7 @@ public class EmailPackage {
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((emailText == null) ? 0 : emailText.hashCode());
+		result = prime * result + ((to == null) ? 0 : to.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -70,6 +81,11 @@ public class EmailPackage {
 				return false;
 		} else if (!emailText.equals(other.emailText))
 			return false;
+		if (to == null) {
+			if (other.to != null)
+				return false;
+		} else if (!to.equals(other.to))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -80,7 +96,8 @@ public class EmailPackage {
 
 	@Override
 	public String toString() {
-		return "EmailPackage [username=" + username + ", email=" + email + ", emailText=" + emailText + "]";
+		return "EmailPackage [username=" + username + ", email=" + email + ", to=" + to + ", emailText=" + emailText
+				+ "]";
 	}
 
 }

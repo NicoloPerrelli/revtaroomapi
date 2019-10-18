@@ -54,7 +54,6 @@ public class UserProfileRepository implements CrudRepository<UserProfile> {
 
 	@Override
 	public boolean deleteById(int id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -69,13 +68,18 @@ public class UserProfileRepository implements CrudRepository<UserProfile> {
 		System.out.println(userProfileInDb.getTrainingType().getName());
 		
 		userProfileInDb.setDescription(upadatedProfile.getDescription());
-		userProfileInDb.setTrainingType(new TrainingType(type));
+		TrainingType typeObj = new TrainingType(type);
+		if(typeObj.getId() != (userProfileInDb.getTrainingType().getId())) {
+			System.out.println("type was different!");
+			userProfileInDb.setTrainingType(typeObj);
+		}
 		
 		System.out.println("after the change --- "+userProfileInDb);
 		session.saveOrUpdate(userProfileInDb);
 		
 		System.out.println(userProfileInDb.getTrainingType().getId());
 		System.out.println(userProfileInDb.getTrainingType().getName());
+		
 		return true;
 	}
 

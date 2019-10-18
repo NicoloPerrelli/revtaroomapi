@@ -13,12 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProfileService {
 	
 	private UserProfileRepository profileRepo;
-	private UserRepository userRepo;
 
 	@Autowired
-	public ProfileService(UserProfileRepository repo, UserRepository userRepo) {
+	public ProfileService(UserProfileRepository repo) {
 		this.profileRepo = repo;
-		this.userRepo = userRepo;
 	}
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)

@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
@@ -52,21 +53,14 @@ public class AuthControllerTest {
     }
     
     @Test
-    public void test_login_user() throws Exception {
-    	Credentials creds = new Credentials("email@test.com", "password");
-    	User user = new User("email@test.com", "password");
-    	when(userService.login(creds)).thenReturn(user);
-		assertEquals(user, userService.login(creds));
-
-        mockMvc.perform(
-                post("/auth")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(creds)))
-                        .andExpect(status().isUnauthorized());
-                
-        verify(userService, atLeastOnce()).login(creds);
-        verifyNoMoreInteractions(userService);
+    public void test_cors_headers() throws Exception {
+        mockMvc.perform(post("/auth"))
+                .andExpect(header().string("Access-Control-Allow-Origin", "*"))
+                .andExpect(header().string("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE"))
+                .andExpect(header().string("Access-Control-Allow-Headers", "Content-type, Authorization"))
+                .andExpect(header().string("Access-Control-Expose-Headers", "Authorization"));
     }
+
     
     public static String asJsonString(final Object obj) {
         try {

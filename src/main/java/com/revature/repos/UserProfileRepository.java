@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
+import com.revature.entities.TrainingType;
 import com.revature.entities.UserProfile;
 
 @Repository
@@ -53,21 +54,32 @@ public class UserProfileRepository implements CrudRepository<UserProfile> {
 
 	@Override
 	public boolean deleteById(int id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean updateWithId(int id, UserProfile upadatedProfile) {
-		System.out.println("WE ARE UPDATING WITH THESE - "+id+" / "+upadatedProfile);
+	public boolean updateWithId(int id, UserProfile upadatedProfile, int type) {
+		upadatedProfile.setId(id);
 		Session session = factory.getCurrentSession();
 		UserProfile userProfileInDb = session.get(UserProfile.class, upadatedProfile.getId());
-
-		if (userProfileInDb == null)
-			return false;
-
+		
+		System.out.println("before the change --- "+userProfileInDb);
+		if(userProfileInDb == null)return false;
+		System.out.println(userProfileInDb.getTrainingType().getId());
+		System.out.println(userProfileInDb.getTrainingType().getName());
+		
 		userProfileInDb.setDescription(upadatedProfile.getDescription());
-		userProfileInDb.setTrainingType(upadatedProfile.getTrainingType());
-
+		TrainingType typeObj = new TrainingType(type);
+		if(typeObj.getId() != (userProfileInDb.getTrainingType().getId())) {
+			System.out.println("type was different!");
+			userProfileInDb.setTrainingType(typeObj);
+		}
+		
+		System.out.println("after the change --- "+userProfileInDb);
+		session.saveOrUpdate(userProfileInDb);
+		
+		System.out.println(userProfileInDb.getTrainingType().getId());
+		System.out.println(userProfileInDb.getTrainingType().getName());
+		
 		return true;
 	}
 

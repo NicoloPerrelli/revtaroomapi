@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,11 +48,12 @@ public class ProfileController {
 	
 	@PutMapping(produces="application/json", consumes="application/json")
 	public boolean updateProfile(HttpServletRequest req, @RequestBody UserProfile upadatedProfile){
-		System.out.println("Before principal we have this - "+upadatedProfile);
+		UserProfile jsonAcceptible = new UserProfile(upadatedProfile.getDescription(),upadatedProfile.getTrainingType());
+		System.out.println("\n\n\n\nthe req body " + jsonAcceptible + "\n\n" + jsonAcceptible.getTrainingType().getId() + "\n\n");
 		Principal principal = (Principal) req.getAttribute("principal");
 		int proId = userServices.getUserById(principal.getId()).getProfile().getId();
 		System.out.println("the user id from jwt " + proId);
-		return profileService.updateProfile(proId,upadatedProfile);
+		return profileService.updateProfile(proId,jsonAcceptible,jsonAcceptible.getTrainingType().getId());
 	}
 	
 	@ExceptionHandler

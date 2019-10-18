@@ -30,11 +30,11 @@ public class ProfileService {
 	public UserProfile getById(int id) {
 		return profileRepo.getById(id);
 	}
-
-	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-	public boolean updateProfile(int id, UserProfile upadatedProfile) {
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
+	public boolean updateProfile(int id, UserProfile upadatedProfile, int type) {
 		System.out.println("ProfileService.updateProfile Invoked!");
-		return profileRepo.updateWithId(id, upadatedProfile);
+		return profileRepo.updateWithId(id, upadatedProfile, type);
 	}
 	
 	@Transactional

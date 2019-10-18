@@ -50,10 +50,13 @@ public class RoomForRentService {
 		
 		log.info("Set the availablity status to yes");
 		rent.setStatus(new RoomAvailabiltyStatus("YES"));
+		roomRepo.save(rent);
 		
-		return roomRepo.save(rent);
+		System.out.println(rent);
+		return rent;
 	}
 	
+	@Transactional
 	public List<RoomForRent> getRoomByUserId(int id) {
 		log.info("roomRepo.getRoomByUserId invoked");
 		if (id <= 0) {
@@ -67,12 +70,14 @@ public class RoomForRentService {
 		return roomRepo.getRoomByUserId(id);
 	}
 	
+	@Transactional
 	public List<RoomForRent> getAllAvailableRoom(){
 		log.info("roomRepo.getAllAvailableRoom invocked!");
 		
 		return roomRepo.getAll();
 	}
 	
+	@Transactional
 	public boolean updateRoomStatus(RoomForRent updateRoom) {
 		log.info("roomRepo.updateRoomStatus invocked!");
 		

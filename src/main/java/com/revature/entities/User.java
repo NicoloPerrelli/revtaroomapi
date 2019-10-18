@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.dtos.Principal;
 
 import lombok.Data;
@@ -67,6 +68,7 @@ public class User {
 	@JoinColumn(name = "USER_ROLE_FK")
 	private Role role;
 
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	private Housing housing;
 

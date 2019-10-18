@@ -48,7 +48,7 @@ public class UserServices {
 	
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 	public User getByEmail(String email) {
-		System.out.println("UserService.getByUsername Invoked!");
+		System.out.println("UserService.getByEmail Invoked!");
 
 		if (email == null || email.equals("")) {
 			System.out.println("non-value provided for username!");

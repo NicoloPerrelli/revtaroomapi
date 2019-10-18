@@ -108,6 +108,25 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
+	
+	
+
+	public User(@NotNull String email) {
+		super();
+		this.email = email;
+	}
+
+
+	public User(@NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String email,
+			String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+
 
 	public User(int id, String firstName, String lastName, String username, String email, String password,
 			UserProfile userProfile, Role role, Housing housing) {

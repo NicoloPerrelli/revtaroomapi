@@ -1,5 +1,7 @@
 package com.revature.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -100,5 +102,30 @@ public class TrainingType {
 	public void setName(String name) {
 		this.trainingType = name;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof TrainingType))
+			return false;
+		TrainingType other = (TrainingType) obj;
+		return id == other.id && Objects.equals(name, other.name);
+	}
+
+
+	@Override
+	public String toString() {
+		return "TrainingType [id=" + id + ", name=" + name + "]";
+	}
+	
+	
 	
 }

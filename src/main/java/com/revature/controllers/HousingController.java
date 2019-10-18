@@ -54,7 +54,7 @@ public class HousingController {
 	@PostMapping(produces="application/json")
 	public Housing postHouses(@RequestBody BrokenHousing bh, HttpServletRequest req) {
 		System.out.println("In postHouses controller...");
-		
+		System.out.println("Brokenhouse" + bh);
 		Principal principal = (Principal) req.getAttribute("principal");
 		
 		if(principal == null || principal.getId() == 0) throw new BadRequestException("Unauthorized");
